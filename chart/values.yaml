@@ -1,9 +1,10 @@
 image:
   name: ghcr.io/openmfp/portal/docker/portal
   pullPolicy: IfNotPresent
-  pullSecret: gcr
-
+  pullSecret: github
 
 deployment:
   maxUnavailable: 0
   maxSurge: 5
+
+port: 8080

@@ -26,7 +26,7 @@ matches the snapshot:
                 - name: IDP_NAMES
                   value: test1,test2
                 - name: PORT
-                  value: ""
+                  value: "8080"
                 - name: REGION
                   value: null
                 - name: IMAGE_TAG
@@ -39,7 +39,7 @@ matches the snapshot:
               imagePullPolicy: IfNotPresent
               name: RELEASE-NAME
               ports:
-                - containerPort: null
+                - containerPort: 8080
                   name: http
               resources:
                 limits:
