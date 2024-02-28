@@ -1,0 +1,10 @@
+suite: deploy
+templates:
+  - deploy.yaml
+tests:
+  - it: matches the snapshot
+    values:
+      - ../test-values.yaml
+    template: deploy.yaml
+    asserts:
+      - matchSnapshot: {}

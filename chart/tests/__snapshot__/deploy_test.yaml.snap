@@ -1,0 +1,57 @@
+matches the snapshot:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: RELEASE-NAME
+      name: RELEASE-NAME
+      namespace: NAMESPACE
+    spec:
+      revisionHistoryLimit: 3
+      selector:
+        matchLabels:
+          app: RELEASE-NAME
+      strategy:
+        rollingUpdate:
+          maxSurge: 5
+          maxUnavailable: 0
+      template:
+        metadata:
+          labels:
+            app: RELEASE-NAME
+        spec:
+          containers:
+            - env:
+                - name: IDP_NAMES
+                  value: test1,test2
+                - name: PORT
+                  value: ""
+                - name: REGION
+                  value: null
+                - name: IMAGE_TAG
+                  value: "12345"
+                - name: IMAGE_NAME
+                  value: ghcr.io/openmfp/portal/docker/portal
+                - name: COOKIE_DOMAIN
+                  value: null
+              image: ghcr.io/openmfp/portal/docker/portal:12345
+              imagePullPolicy: IfNotPresent
+              name: RELEASE-NAME
+              ports:
+                - containerPort: null
+                  name: http
+              resources:
+                limits:
+                  cpu: "1"
+                  memory: 512Mi
+                requests:
+                  cpu: 40m
+                  memory: 50Mi
+              securityContext:
+                readOnlyRootFilesystem: true
+          securityContext:
+            fsGroup: 2000
+            runAsGroup: 3000
+            runAsUser: 1000
+          serviceAccountName: RELEASE-NAME

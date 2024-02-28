@@ -1,0 +1,50 @@
+{
+  "name": "portal",
+  "version": "1.0.0",
+  "description": "",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "preinstall": "npx only-allow npm",
+    "npm:install:ui": "cd frontend && npm install",
+    "npm:install:server": "cd backend && npm install",
+    "build": "concurrently 'npm:build:*'",
+    "build:ui": "cd frontend && npm run build",
+    "build:server": "cd backend && npm run build",
+    "lint": "concurrently 'npm:lint:*(!fix)'",
+    "lint:ui": "cd frontend && npm run lint",
+    "lint:server": "cd backend && npm run lint",
+    "lint:fix": "concurrently 'npm:lint:fix:*'",
+    "lint:fix:ui": "cd frontend && npm run lint:fix",
+    "lint:fix:server": "cd backend && npm run lint:fix",
+    "start": "concurrently 'npm:start:*'",
+    "start:ui": "cd frontend && npm run start:watch",
+    "start:server": "cd backend && npm run start:watch",
+    "test": "concurrently 'npm:test:*(!cov)'",
+    "test:ui": "cd frontend && npm run test",
+    "test:server": "cd backend && npm run test",
+    "test:cov": "concurrently 'npm:test:cov:*'",
+    "test:cov:ui": "cd frontend && npm run test:cov",
+    "test:cov:server": "cd backend && npm run test:cov",
+    "prepare": "husky && npm run npm:install:ui && npm run npm:install:server"
+  },
+  "devDependencies": {
+    "concurrently": "8.2.2",
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "private": true,
+  "lint-staged": {
+    "frontend/**/*.ts": "npm run lint:ui",
+    "backend/**/*.ts": "npm run lint:server"
+  }
+}

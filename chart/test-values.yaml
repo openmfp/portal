@@ -1,0 +1,10 @@
+image:
+  tag: 12345
+
+trust:
+  test1:
+  test2:
+
+baseDomains:
+  - portal.example.com
+  - portal2.example.com

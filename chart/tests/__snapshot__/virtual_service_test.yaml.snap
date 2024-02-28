@@ -1,0 +1,33 @@
+virtual service match the snapshot:
+  1: |
+    apiVersion: networking.istio.io/v1alpha3
+    kind: VirtualService
+    metadata:
+      name: RELEASE-NAME
+      namespace: NAMESPACE
+    spec:
+      gateways:
+        - NAMESPACE/gateway
+      hosts:
+        - portal.example.com
+        - test1.portal.example.com
+        - test2.portal.example.com
+        - portal2.example.com
+        - test1.portal2.example.com
+        - test2.portal2.example.com
+      http:
+        - corsPolicy:
+            allowHeaders:
+              - Authorization
+              - Content-Type
+              - '*'
+            allowMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+          route:
+            - destination:
+                host: RELEASE-NAME.NAMESPACE.svc.cluster.local
+                port:
+                  number: 8080

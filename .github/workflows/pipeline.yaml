@@ -1,0 +1,16 @@
+name: pipe
+on: [push]
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pipe:
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@main
+    secrets: inherit
+    with:
+      imageTagName: ghcr.io/openmfp/portal

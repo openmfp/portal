@@ -1,0 +1,25 @@
+## ignore everything
+**
+
+## positive list the required files
+
+## ui
+!frontend/src
+!frontend/package.json
+!frontend/package-lock.json
+!frontend/angular.json
+!frontend/tsconfig.json
+!frontend/tsconfig.app.json
+
+## server
+!backend/src
+!backend/package.json
+!backend/package-lock.json
+!backend/tsconfig.build.json
+!backend/tsconfig.json
+!backend/nest-cli.json
+
+## root
+!tsconfig.base.json
+!package.json
+!package-lock.json
