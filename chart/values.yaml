@@ -3,7 +3,8 @@ image:
   pullPolicy: IfNotPresent
   pullSecret: gcr
 
-
 deployment:
   maxUnavailable: 0
   maxSurge: 5
+
+port: 8080
