@@ -1,5 +1,5 @@
 image:
-  name: ghcr.io/openmfp/portal/docker/portal
+  name: ghcr.io/openmfp/portal
   pullPolicy: IfNotPresent
   pullSecret: github
 

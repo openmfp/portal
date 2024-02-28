@@ -32,10 +32,10 @@ matches the snapshot:
                 - name: IMAGE_TAG
                   value: "12345"
                 - name: IMAGE_NAME
-                  value: ghcr.io/openmfp/portal/docker/portal
+                  value: ghcr.io/openmfp/portal
                 - name: COOKIE_DOMAIN
                   value: null
-              image: ghcr.io/openmfp/portal/docker/portal:12345
+              image: ghcr.io/openmfp/portal:12345
               imagePullPolicy: IfNotPresent
               name: RELEASE-NAME
               ports:
