@@ -7,9 +7,6 @@ concurrency:
 
 jobs:
   pipe:
-    concurrency:
-      group: ${{ github.ref }}
-      cancel-in-progress: true
     uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@main
     secrets: inherit
     with:
