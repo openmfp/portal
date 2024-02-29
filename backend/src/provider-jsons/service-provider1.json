@@ -1,0 +1,22 @@
+{
+  "name": "overview",
+  "luigiConfigFragment": [
+    {
+      "data": {
+        "nodes": [
+          {
+            "entityType": "global",
+            "pathSegment": "overview",
+            "label": "Overview",
+            "icon": "home",
+            "viewUrl": "https://fiddle.luigi-project.io/examples/microfrontends/multipurpose.html",
+            "context": {
+              "title": "Welcome to OpenMFP Portal",
+              "content": " "
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

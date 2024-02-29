@@ -4,7 +4,13 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true,
-    "webpack": true
+    "webpack": true,
+    "assets": [
+      {
+        "include": "provider-jsons/*.json",
+        "watchAssets": true
+      }
+    ]
   },
   "projects": {
     "portal-lib": {

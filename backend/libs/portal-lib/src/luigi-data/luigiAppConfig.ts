@@ -11,13 +11,8 @@ interface ViewGroup {
   requiredIFramePermissions?: Record<string, string>;
 }
 
-interface VizConfig {
+export interface LuigiNavConfig {
   viewGroup?: ViewGroup;
   nodes?: LuigiNode[];
   userSettings: LuigiUserSettingsConfig;
-}
-
-export interface LuigiNavConfig {
-  vizType?: string;
-  vizConfig?: VizConfig;
 }

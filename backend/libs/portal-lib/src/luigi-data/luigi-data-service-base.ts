@@ -14,7 +14,7 @@ export class LuigiDataServiceBase {
   async getLuigiDataFromFragment(
     cdm: LuigiConfigFragment[],
     language: string,
-    extendedLuigiConfigFragment?: ExtendedLuigiConfigFragment
+    extendedLuigiConfigFragment?: ExtendedLuigiConfigFragment,
   ): Promise<LuigiNode[]> {
     const nodeArrays = await Promise.allSettled(
       cdm.map(async (c) => {
@@ -27,8 +27,8 @@ export class LuigiDataServiceBase {
           data = this.translateTextsFromCDM(data, language);
         }
 
-        return this.processCdmJson(data, undefined);
-      })
+        return this.processLugiFragment(data, undefined);
+      }),
     );
 
     const nodes: LuigiNode[] = [];
@@ -64,7 +64,7 @@ export class LuigiDataServiceBase {
   // Only add the extension class name to a node if it's missing mandatory data
   // because we need it for navigation purposes
   private getExtensionClassNameForNode(
-    extendedLuigiConfigFragment: ExtendedLuigiConfigFragment
+    extendedLuigiConfigFragment: ExtendedLuigiConfigFragment,
   ): string | undefined {
     if (
       extendedLuigiConfigFragment?.isMissingMandatoryData &&
@@ -81,10 +81,10 @@ export class LuigiDataServiceBase {
     const { textDictionary } = this.findMatchedDictionary(data.texts, language);
 
     textDictionary &&
-      Object.entries(textDictionary).forEach(([key, value]) => {
-        const searchRegExp = new RegExp(`{{${key}}}`, 'g');
-        cdmString = cdmString.replace(searchRegExp, value.toString());
-      });
+    Object.entries(textDictionary).forEach(([key, value]) => {
+      const searchRegExp = new RegExp(`{{${key}}}`, 'g');
+      cdmString = cdmString.replace(searchRegExp, value.toString());
+    });
 
     return JSON.parse(cdmString) as Record<string, any>;
   }
@@ -110,39 +110,27 @@ export class LuigiDataServiceBase {
     return matchedDict || defaultDict;
   }
 
-  private processCdmJson(data, cdmUri: string | undefined): LuigiNode[] {
-    if (
-      data.payload &&
-      data.payload.visualizations &&
-      data.payload.visualizations.LuigiNavConfig &&
-      data.payload.targetAppConfig
-    ) {
-      const luigiVisConf = data.payload.visualizations
-        .LuigiNavConfig as LuigiNavConfig;
-      const luigiAppConfig: LuigiAppConfig =
-        data.payload.targetAppConfig['sap.integration'];
-      const luigiIntentInboundList: CrossNavigationInbounds =
-        data.payload.targetAppConfig['sap.app']?.crossNavigation?.inbounds;
-      return this._createNodes(
-        luigiVisConf,
-        luigiAppConfig,
-        luigiIntentInboundList,
-        cdmUri != undefined ? URI.parse(cdmUri) : undefined
-      );
-    } else {
-      throw new Error(
-        'Ignoring data model because data is missing. Make sure that visualization and targetAppConfig properties are set properly.'
-      );
-    }
+  private processLugiFragment(data, cdmUri: string | undefined): LuigiNode[] {
+    const luigiNavConfig = data as LuigiNavConfig;
+    const luigiAppConfig: LuigiAppConfig =
+      data;
+    const luigiIntentInboundList: CrossNavigationInbounds =
+      data.crossNavigation?.inbounds;
+    return this._createNodes(
+      luigiNavConfig,
+      luigiAppConfig,
+      luigiIntentInboundList,
+      cdmUri != undefined ? URI.parse(cdmUri) : undefined,
+    );
   }
 
   _createNodes(
     cfg: LuigiNavConfig,
     appConfig: LuigiAppConfig,
     luigiIntentInboundList: CrossNavigationInbounds,
-    cdmUri: URIComponents | undefined
+    cdmUri: URIComponents | undefined,
   ): LuigiNode[] {
-    if (cfg && cfg.vizConfig && cfg.vizConfig.nodes) {
+    if (cfg && cfg.nodes) {
       const nodes: LuigiNode[] = [];
       let urlTemplateUrl = '';
       if (cdmUri != undefined) {
@@ -153,20 +141,20 @@ export class LuigiDataServiceBase {
         urlTemplateUrl = appConfig.urlTemplateParams.url || localUrl;
       }
 
-      cfg.vizConfig.nodes.forEach((node) => {
+      cfg.nodes.forEach((node) => {
         nodes.push(this._createNode(node, cfg, appConfig, urlTemplateUrl));
       });
 
       if (nodes.length > 0) {
         const configTransferNode = nodes[0];
 
-        if (cfg.vizConfig?.viewGroup?.preloadSuffix) {
-          configTransferNode._dxpPreloadUrl = `${urlTemplateUrl}${cfg.vizConfig.viewGroup.preloadSuffix}`;
+        if (cfg.viewGroup?.preloadSuffix) {
+          configTransferNode._dxpPreloadUrl = `${urlTemplateUrl}${cfg.viewGroup.preloadSuffix}`;
         }
         configTransferNode._requiredIFramePermissionsForViewGroup =
-          cfg.vizConfig?.viewGroup?.requiredIFramePermissions;
+          cfg.viewGroup?.requiredIFramePermissions;
 
-        configTransferNode._dxpUserSettingsConfig = cfg.vizConfig?.userSettings;
+        configTransferNode._dxpUserSettingsConfig = cfg.userSettings;
         if (configTransferNode._dxpUserSettingsConfig?.groups) {
           Object.keys(configTransferNode._dxpUserSettingsConfig.groups).forEach(
             (key) => {
@@ -175,14 +163,14 @@ export class LuigiDataServiceBase {
               if (group.viewUrl && !this.isAbsoluteUrl(group.viewUrl)) {
                 group.viewUrl = `${urlTemplateUrl}${group.viewUrl}`;
               }
-            }
+            },
           );
         }
 
         // Resolve intentMapping information and pass through with the config transfer node
         const intentData = this.resolveIntentTargetsAndEntityPath(
           nodes,
-          luigiIntentInboundList
+          luigiIntentInboundList,
         );
         configTransferNode._intentMappings = intentData?.intentMappings;
         configTransferNode._entityRelativePaths =
@@ -207,9 +195,9 @@ export class LuigiDataServiceBase {
     nodeCfg,
     cfg,
     appConfig,
-    urlTemplateUrl: string
+    urlTemplateUrl: string,
   ): LuigiNode {
-    const nodeDefaults = cfg.vizConfig.nodeDefaults || {};
+    const nodeDefaults = cfg.nodeDefaults || {};
     const node: LuigiNode = {
       ...nodeDefaults,
       ...nodeCfg,
@@ -367,7 +355,7 @@ export class LuigiDataServiceBase {
    */
   resolveIntentTargetsAndEntityPath(
     nodes: LuigiNode[],
-    inbounds: CrossNavigationInbounds
+    inbounds: CrossNavigationInbounds,
   ): {
     intentMappings?: LuigiIntent[];
     entityRelativePaths?: Record<string, any>;
@@ -384,10 +372,10 @@ export class LuigiDataServiceBase {
           node.entityType,
           '',
           node.entityType,
-          tempListObject
+          tempListObject,
         );
         listOfIntentMappings = listOfIntentMappings.concat(
-          tempListObject.intentMappings
+          tempListObject.intentMappings,
         );
         Object.assign(listOfEntityPaths, tempListObject.entityRelativePaths);
       }
@@ -420,7 +408,7 @@ export class LuigiDataServiceBase {
     intentKnowledge: {
       intentMappings: LuigiIntent[];
       entityRelativePaths: Record<string, any>;
-    }
+    },
   ) {
     // parent entity for building 'entityRelativePaths' knowledge
     let currentParentEntity = parentEntity;
@@ -475,7 +463,7 @@ export class LuigiDataServiceBase {
           currentParentEntity,
           currentPathSegment,
           currentTargetParentEntity,
-          intentKnowledge
+          intentKnowledge,
         );
       }
     }

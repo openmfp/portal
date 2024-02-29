@@ -5,8 +5,8 @@ import { HelpCenterData } from './help-center.data';
 export interface RawServiceProvider {
   name: string;
   luigiConfigFragment: LuigiConfigFragment[];
-  config: Record<string, string>;
-  creationTimestamp: string;
+  config?: Record<string, string>;
+  creationTimestamp?: string;
   installationData?: Record<string, string>;
   extensionClassName?: string;
   isMissingMandatoryData?: boolean;
