@@ -46,7 +46,10 @@ export class LuigiconfigService {
             pathSegment: 'gardener', 
             label: 'Gardener Dashboard',
             viewUrl: 'https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/',
-            icon: 'https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg'
+            icon: 'https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg',
+            loadingIndicator: {
+              enabled: false
+            }
           },{ 
               pathSegment: 'empty', 
               label: 'Empty Page', 
