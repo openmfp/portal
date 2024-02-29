@@ -10,11 +10,9 @@ virtual service match the snapshot:
         - NAMESPACE/gateway
       hosts:
         - portal.example.com
-        - test1.portal.example.com
-        - test2.portal.example.com
+        - portal.portal.example.com
         - portal2.example.com
-        - test1.portal2.example.com
-        - test2.portal2.example.com
+        - portal.portal2.example.com
       http:
         - corsPolicy:
             allowHeaders:

@@ -31,6 +31,21 @@ spec:
         securityContext:
           readOnlyRootFilesystem: true
         env:
+      {{- range $key, $idp := .Values.trust }}
+        - name: OIDC_CLIENT_ID_{{ $key | upper | replace "-" "_" }}
+          value: {{ $idp.loginAudience | default $idp.audience }}
+        - name: OIDC_CLIENT_SECRET_{{ $key | upper | replace "-" "_" }}
+          valueFrom:
+            secretKeyRef:
+              name: portal-client-secret-{{ $idp.secretKey | default $key }}
+              key: secret
+        - name: AUTH_SERVER_URL_{{ $key | upper | replace "-" "_" }}
+          value: {{ $idp.authDomain | default $idp.trustedIssuer }}
+      {{- if $idp.baseDomains }}
+        - name: BASE_DOMAINS_{{ $key | upper | replace "-" "_" }}
+          value: {{ $idp.baseDomains }}
+      {{- end }}
+      {{- end }}
         - name: IDP_NAMES
           {{- $keys := keys .Values.trust | sortAlpha }}
           value: "{{ join "," $keys  }}"

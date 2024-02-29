@@ -23,8 +23,19 @@ matches the snapshot:
         spec:
           containers:
             - env:
+                - name: OIDC_CLIENT_ID_PORTAL
+                  value: 12345
+                - name: OIDC_CLIENT_SECRET_PORTAL
+                  valueFrom:
+                    secretKeyRef:
+                      key: secret
+                      name: portal-client-secret-portal
+                - name: AUTH_SERVER_URL_PORTAL
+                  value: https://auth.example.com
+                - name: BASE_DOMAINS_PORTAL
+                  value: portal.example.com,portal2.example.com
                 - name: IDP_NAMES
-                  value: test1,test2
+                  value: portal
                 - name: PORT
                   value: "8080"
                 - name: REGION

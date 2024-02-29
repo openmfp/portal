@@ -66,7 +66,7 @@ export class EnvService {
     }
 
     const idpEnvName = this.getIdpEnvName(idpName);
-    const oauthServerUrl = process.env[`IAS_TENANT_URL_${idpEnvName}`];
+    const oauthServerUrl = process.env[`AUTH_SERVER_URL_${idpEnvName}`];
     const clientId = process.env[`OIDC_CLIENT_ID_${idpEnvName}`];
     const clientSecretEnvVar = `OIDC_CLIENT_SECRET_${idpEnvName}`;
     const clientSecret = process.env[clientSecretEnvVar];

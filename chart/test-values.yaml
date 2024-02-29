@@ -1,10 +1,13 @@
 image:
   tag: 12345
 
-trust:
-  test1:
-  test2:
-
 baseDomains:
   - portal.example.com
   - portal2.example.com
+
+trust:
+  portal:
+    baseDomains: "portal.example.com,portal2.example.com"
+    authDomain: https://auth.example.com
+    loginAudience: 12345
+    oidcClientSecretName: portal
