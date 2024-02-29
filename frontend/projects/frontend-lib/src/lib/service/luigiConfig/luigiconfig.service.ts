@@ -42,6 +42,11 @@ export class LuigiconfigService {
                   title: 'Welcome to OpenMFP Portal',
                   content: ' '
               }
+          },{
+            pathSegment: 'gardener', 
+            label: 'Gardener Dashboard',
+            viewUrl: 'https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/',
+            icon: 'https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg'
           },{ 
               pathSegment: 'empty', 
               label: 'Empty Page', 
