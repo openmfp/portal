@@ -18,10 +18,10 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "openmfp/portal-lib": [
+      "@openmfp/portal-lib": [
         "libs/portal-lib/src"
       ],
-      "openmfp/portal-lib/*": [
+      "@openmfp/portal-lib/*": [
         "libs/portal-lib/src/*"
       ]
     }

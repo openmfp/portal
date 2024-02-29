@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { PortalModule } from '@openmfp/portal-lib';
+import { join } from 'path';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [PortalModule.create({
+    frontendDistSources: join(__dirname, '../..', 'frontend/dist/frontend')
+  })],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
