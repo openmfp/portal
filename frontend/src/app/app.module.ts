@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { Router } from '@angular/router';
+import { FrameComponent, FrameModule } from 'projects/frontend-lib/src/public-api';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule,
-    AppRoutingModule
+    FrameModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [FrameComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private router: Router) {
+    
+  }
+ }
+
