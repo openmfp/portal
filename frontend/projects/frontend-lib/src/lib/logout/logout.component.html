@@ -1,0 +1,22 @@
+<div class="fd-page">
+  <link rel="stylesheet" href="/fundamental-styles/fundamental-styles.css" />
+  <div class="fd-page__content">
+    <div class="fd-container fd-container--centered">
+      <div class="content">
+        <span class="sap-icon--log"></span>
+
+        <div class="info" data-e2e="logout-headline">{{ headline }}</div>
+        <div class="hint" data-e2e="logout-message">{{ hint }}</div>
+
+        <p class="fd-has-text-align-center">
+          <button
+            class="fd-button fd-button--action-bar fd-button--l"
+            (click)="login()"
+          >
+            {{ btnText }}
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
