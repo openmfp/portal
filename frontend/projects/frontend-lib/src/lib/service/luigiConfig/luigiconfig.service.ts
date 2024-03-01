@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LuigiCoreService } from '../luigiCore.service';
+import { AuthConfigService } from './auth.config.service';
+import { EnvConfigService } from '../env-config.service';
+import { ClientEnvironment } from '../../env/client-environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,13 +11,18 @@ export class LuigiconfigService {
 
   constructor(
     private luigiCoreService: LuigiCoreService,
+    private authConfigService: AuthConfigService,
+    private envConfigService: EnvConfigService
   ) {
-    
+
   }
 
 
   public async setLuigiConfiguration() {
+    const envConfig: ClientEnvironment = await this.envConfigService.getEnvConfig();
+
     const config = {
+      //auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
       routing: {} as any,
       settings: {
         header: {
@@ -26,16 +34,16 @@ export class LuigiconfigService {
         },
         btpToolLayout: true,
         responsiveNavigation: 'Fiori3'
-        
+
       },
       navigation: {
-        nodes: [{ 
-          pathSegment: 'home', 
-          label: 'h', 
-          hideFromNav: true, 
-          children: [{ 
-              pathSegment: 'overview', 
-              label: 'Overview', 
+        nodes: [{
+          pathSegment: 'home',
+          label: 'h',
+          hideFromNav: true,
+          children: [{
+              pathSegment: 'overview',
+              label: 'Overview',
               icon: 'home',
               viewUrl: 'https://fiddle.luigi-project.io/examples/microfrontends/multipurpose.html',
               context: {
@@ -43,16 +51,16 @@ export class LuigiconfigService {
                   content: ' '
               }
           },{
-            pathSegment: 'gardener', 
+            pathSegment: 'gardener',
             label: 'Gardener Dashboard',
             viewUrl: 'https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/',
             icon: 'https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg',
             loadingIndicator: {
               enabled: false
             }
-          },{ 
-              pathSegment: 'empty', 
-              label: 'Empty Page', 
+          },{
+              pathSegment: 'empty',
+              label: 'Empty Page',
               category: {
                   label: 'Fundamental Demo Pages',
                   icon: 'dimension',
@@ -62,17 +70,17 @@ export class LuigiconfigService {
                   enabled: false
               },
               viewUrl: 'https://fiddle.luigi-project.io/examples/microfrontends/fundamental/empty-demo-page.html'
-          },{ 
-              pathSegment: 'table', 
-              label: 'Table', 
+          },{
+              pathSegment: 'table',
+              label: 'Table',
               category: 'Fundamental Demo Pages',
               loadingIndicator: {
                   enabled: false
               },
               viewUrl: 'https://fiddle.luigi-project.io/examples/microfrontends/fundamental/table-demo-page.html'
-          },{ 
-              pathSegment: 'tree', 
-              label: 'Tree', 
+          },{
+              pathSegment: 'tree',
+              label: 'Tree',
               category: 'Fundamental Demo Pages',
               loadingIndicator: {
                   enabled: false

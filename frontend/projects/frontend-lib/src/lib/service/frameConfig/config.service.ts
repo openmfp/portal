@@ -7,7 +7,7 @@ import { EntityConfig, PortalConfig } from '../../../../../../../backend/libs/po
   providedIn: 'root',
 })
 export class ConfigService {
-  private portalConfigCache: Promise<PortalConfig>;
+  private portalConfigCache: Promise<PortalConfig> | undefined;
 
   private entityConfigCache: Record<
     string /* entity */,
@@ -26,7 +26,8 @@ export class ConfigService {
 
     // cache response, since it gets called multiple times due to Luigi internals
     const options = this.requestHeadersService.createOptionsWithAuthHeader();
-    this.portalConfigCache = this.http
+    // @ts-ignore
+    const response : Promise<PortalConfig> = this.http
       .get<PortalConfig>('/rest/config', options)
       .toPromise()
       .catch((e) => {
@@ -35,8 +36,9 @@ export class ConfigService {
         }
         throw e;
       });
+    this.portalConfigCache = response as Promise<PortalConfig> | undefined;
 
-    return this.portalConfigCache;
+    return response;
   }
 
   async getEntityConfig(
@@ -52,16 +54,19 @@ export class ConfigService {
     }
 
     const options = this.requestHeadersService.createOptionsWithAuthHeader();
-    const entityConfig = this.http
+    const response = this.http
       .get<EntityConfig>(`/rest/config/${entity}`, {
         ...options,
         ...{ params: context },
       })
       .toPromise();
 
+    const entityConfig = response as Promise<EntityConfig>;
+
     if (!this.entityConfigCache[entity]) {
       this.entityConfigCache[entity] = {};
     }
+    // @ts-ignore
     this.entityConfigCache[entity][entityCacheKey] = entityConfig;
     return entityConfig;
   }
