@@ -43,6 +43,9 @@ export class LuigiconfigService {
           pathSegment: 'home',
           label: 'h',
           hideFromNav: true,
+          context: {
+            token: this.authService.getToken()
+          },
           children: [{
               pathSegment: 'overview',
               label: 'Overview',
