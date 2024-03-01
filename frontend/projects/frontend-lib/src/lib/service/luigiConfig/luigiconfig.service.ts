@@ -21,15 +21,15 @@ export class LuigiconfigService {
 
 
   public async setLuigiConfiguration() {
-    const envConfig: ClientEnvironment = await this.envConfigService.getEnvConfig();
+    // const envConfig: ClientEnvironment = await this.envConfigService.getEnvConfig();
 
     const config = {
-      auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
+      //auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
       routing: {} as any,
       settings: {
         header: {
           title: 'OpenMFP Portal',
-          logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg'
+          logo: 'assets/ora-logo.svg'
         },
         experimental: {
           btpToolLayout: true
@@ -106,8 +106,8 @@ export class LuigiconfigService {
 
     this.luigiCoreService.setConfig(config);
 
-    this.luigiCoreService
-      .auth()
-      .store.setAuthData(this.authService.getAuthData());
+    // this.luigiCoreService
+    //   .auth()
+    //   .store.setAuthData(this.authService.getAuthData());
   }
 }
