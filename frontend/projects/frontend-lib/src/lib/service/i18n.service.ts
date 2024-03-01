@@ -5,15 +5,17 @@ import { LuigiCoreService } from './luigiCore.service';
 })
 export class I18nService {
   // TODO: configurable in service
-  fallbackLanguage = 'en';
+  fallbackLanguage: string = 'en';
   translationTable = {};
   currentLanguage: string;
 
-  constructor(private luigiCoreService: LuigiCoreService) {}
+  constructor(private luigiCoreService: LuigiCoreService) {
+    this.currentLanguage = ''
+  }
 
   afterInit() {
     this.currentLanguage = this.luigiCoreService.i18n().getCurrentLocale();
-    this.luigiCoreService.i18n().addCurrentLocaleChangeListener((locale) => {
+    this.luigiCoreService.i18n().addCurrentLocaleChangeListener((locale: string) => {
       this.currentLanguage = locale;
     });
   }
@@ -62,7 +64,8 @@ export class I18nService {
       let result = this.getInternalTranslation(key, interpolations, locale);
       // fallback language
       if (!result) {
-        if (!this.translationTable[this.fallbackLanguage]) {
+        // @ts-ignore
+        if (this.translationTable && !this.translationTable[this.fallbackLanguage]) {
           this.fetchTranslationFile(this.fallbackLanguage).then(() => {
             result = this.findTranslation(
               key,
@@ -133,6 +136,7 @@ export class I18nService {
       });
       return value;
     }
+    return undefined;
   }
 
   /**
@@ -143,6 +147,7 @@ export class I18nService {
    */
   addTranslationFile(locale: string, data: Record<string, string>) {
     if (data && locale) {
+      // @ts-ignore
       this.translationTable[locale] = data;
     }
   }

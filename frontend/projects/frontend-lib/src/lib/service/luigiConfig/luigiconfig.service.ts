@@ -3,6 +3,7 @@ import { LuigiCoreService } from '../luigiCore.service';
 import { AuthConfigService } from './auth.config.service';
 import { EnvConfigService } from '../env-config.service';
 import { ClientEnvironment } from '../../env/client-environment';
+import { AuthService } from '../auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { ClientEnvironment } from '../../env/client-environment';
 export class LuigiconfigService {
 
   constructor(
+    private authService: AuthService,
     private luigiCoreService: LuigiCoreService,
     private authConfigService: AuthConfigService,
     private envConfigService: EnvConfigService
@@ -22,7 +24,7 @@ export class LuigiconfigService {
     const envConfig: ClientEnvironment = await this.envConfigService.getEnvConfig();
 
     const config = {
-      //auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
+      auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
       routing: {} as any,
       settings: {
         header: {
@@ -100,5 +102,9 @@ export class LuigiconfigService {
     config.routing.modalPathParam = 'modalPathParamDisabled'; // workaround, this line can be removed after luigi checks showModalPathInUrl initially (https://github.com/SAP/luigi/issues/2291)
 
     this.luigiCoreService.setConfig(config);
+
+    this.luigiCoreService
+      .auth()
+      .store.setAuthData(this.authService.getAuthData());
   }
 }

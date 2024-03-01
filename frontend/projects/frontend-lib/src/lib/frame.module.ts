@@ -12,6 +12,8 @@ import { ConfigService } from './service/frameConfig/config.service';
 import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from './service/storage.service';
 import { CallbackComponent } from './callback/callback.component';
+import { LogoutComponent } from './logout/logout.component';
+import { I18nService } from './service/i18n.service';
 
 
 
@@ -19,7 +21,8 @@ import { CallbackComponent } from './callback/callback.component';
   declarations: [
     FrameComponent,
     LuigiComponent,
-    CallbackComponent
+    CallbackComponent,
+    LogoutComponent
   ],
   providers: [
     LuigiconfigService,
@@ -28,7 +31,7 @@ import { CallbackComponent } from './callback/callback.component';
     EnvConfigService,
     ConfigService,
     StorageService,
-
+    I18nService
   ],
   imports: [
     RouterModule,

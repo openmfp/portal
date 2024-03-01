@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LuigiCoreService } from '../service/luigiCore.service';
 import { I18nService } from '../service/i18n.service';
+
+interface UrlParams {
+  error: string;
+}
 
 @Component({
   selector: 'app-logout',
@@ -9,13 +13,13 @@ import { I18nService } from '../service/i18n.service';
   styleUrls: ['./logout.component.scss'],
 })
 export class LogoutComponent implements OnInit {
-  headline: string;
-  hint: string;
+  headline: string = '';
+  hint: string = '';
   message = '';
-  btnText: string;
-  loginTarget: string;
+  btnText: string = '';
+  loginTarget: string= '';
 
-  private urlParams;
+  private urlParams: Params ={ error: '' }
 
   constructor(
     private route: ActivatedRoute,
@@ -77,7 +81,7 @@ export class LogoutComponent implements OnInit {
   }
 
   parseUrlParameters() {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.subscribe((params: Params) => {
       this.urlParams = params;
     });
   }
