@@ -23,20 +23,25 @@ export class LuigiconfigService {
   public async setLuigiConfiguration() {
     const envConfig: ClientEnvironment = await this.envConfigService.getEnvConfig();
 
+    const logo = location.href.includes('ft=mfp-logo') ? 
+    'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
     const config = {
       auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
       routing: {} as any,
       settings: {
         header: {
           title: 'OpenMFP Portal',
-          logo: 'assets/ora-logo.svg'
+          logo: logo,
+          favicon: logo,
         },
         experimental: {
           btpToolLayout: true
         },
         btpToolLayout: true,
-        responsiveNavigation: 'Fiori3'
-
+        responsiveNavigation: 'Fiori3',
+        featureToggles: { 
+          queryStringParam: 'ft',
+        },
       },
       navigation: {
         nodes: [{
