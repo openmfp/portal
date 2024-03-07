@@ -19,9 +19,24 @@ export class EnvController {
     const env = this.envService.getEnv();
     const authEnv = this.envService.getCurrentAuthEnv(request);
 
+    if (authEnv.oauthServerUrl === 'none') {
+      const result: ClientEnvironment = {
+        oauthServerUrl: authEnv.oauthServerUrl,
+        clientId: authEnv.clientId,
+        developmentInstance: env.developmentInstance,
+      };
+
+      result.authData = {
+        access_token:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTcwOTgwNDU0MSwiZXhwIjoxNzA5ODA4MTQxLCJsYXN0X25hbWUiOiJEb2UiLCJmaXJzdF9uYW1lIjoiSm9obiJ9.S0YvifYOKg9GuHpJm8OWr8udhTVj5TObVkn0M-j8Yz4',
+        expires_in: new Date().getTime() + 200000 + '',
+      };
+      return result;
+    }
+
     const authData = await this.authDataService.provideAuthData(
       request,
-      response
+      response,
     );
 
     const result: ClientEnvironment = {
