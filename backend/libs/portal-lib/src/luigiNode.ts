@@ -120,6 +120,7 @@ export interface LuigiNode {
   requiredPolicies?: string[];
   webcomponent?: boolean;
   onNodeActivation?: (node: LuigiNode) => boolean;
+  initialRoute?: string;
   openNodeInModal?: any;
   defineEntity?: EntityDefinition;
   compound?: any;
