@@ -111,7 +111,6 @@ export class LuigiconfigService {
       validWebcomponentUrls: envConfig.validWebcomponentUrls,
       //intentMapping: this.intentNavigationService.buildIntentMappings(allNodes),
       nodeChangeHook: function (prevNode: LuigiNode, nextNode: LuigiNode) {
-        console.log(nextNode);
         if(nextNode.initialRoute && nextNode.virtualTree && !(nextNode as any)._virtualTree) {
           lcs.navigation().navigate(nextNode.initialRoute);
         }

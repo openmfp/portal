@@ -11,7 +11,7 @@
             "label": "Gardener Dashboard",
             "virtualTree": true,
             "initialRoute": "namespace/_all/shoots",
-            "url": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/",
+            "url": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com",
             "icon": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg"
           }
         ]
