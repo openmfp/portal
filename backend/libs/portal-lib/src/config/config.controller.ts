@@ -41,7 +41,7 @@ export class ConfigController {
     @Inject(TENANT_PROVIDER_INJECTION_TOKEN)
     private tenantProvider: TenantProvider,
     @Inject(PORTAL_CONTEXT_INJECTION_TOKEN)
-    private frameContextProvider: PortalContextProvider,
+    private portalContextProvider: PortalContextProvider,
     @Inject(ENTITY_CONTEXT_INJECTION_TOKEN)
     entityContextProviders: EntityContextProviders,
     @Inject(FEATURE_TOGGLES_INJECTION_TOKEN)
@@ -67,7 +67,7 @@ export class ConfigController {
     const featureTogglePromise = this.featureTogglesProvider
       .getFeatureToggles()
       .catch((e: Error) => e);
-    const frameContextPromise = this.frameContextProvider
+    const portalContextPromise = this.portalContextProvider
       .getContextValues(request, response)
       .catch((e: Error) => e);
 
@@ -78,20 +78,20 @@ export class ConfigController {
       const featureToggles = ConfigController.getOrThrow(
         await featureTogglePromise
       );
-      const frameContext = ConfigController.getOrThrow(
-        await frameContextPromise
+      const portalContext = ConfigController.getOrThrow(
+        await portalContextPromise
       );
       const { tenantId, providers } = ConfigController.getOrThrow(
         await providersAndTenantPromise
       );
 
-      frameContext.extensionManagerMissingMandatoryDataUrl =
+      portalContext.extensionManagerMissingMandatoryDataUrl =
         this.getExtensionManagerMissingMandatoryDataUrl(providers);
 
       return {
         providers,
         tenantId,
-        frameContext,
+        portalContext: portalContext,
         featureToggles,
       };
     } catch (e) {

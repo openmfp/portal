@@ -17,6 +17,6 @@ const routerModuleModuleWithProviders = RouterModule.forRoot(routes);
   imports: [routerModuleModuleWithProviders],
   exports: [RouterModule],
 })
-export class FrameRoutingModule {
+export class PortalRoutingModule {
   constructor() {}
 }

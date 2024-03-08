@@ -1,14 +1,15 @@
 {
   "name": "gardener",
+  "creationTimestamp": "2022-05-17T11:37:17Z",
   "luigiConfigFragment": [
     {
       "data": {
         "nodes": [
           {
-            "entityType": "global",
+            "entityType": "example",
             "pathSegment": "gardener",
             "label": "Gardener Dashboard",
-            "viewUrl": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/",
+            "url": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/",
             "icon": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg"
           }
         ]
