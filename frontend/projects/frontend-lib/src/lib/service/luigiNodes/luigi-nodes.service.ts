@@ -169,9 +169,9 @@ export class LuigiNodesService {
     serverLuigiNodes: LuigiNode[],
     currentEntities: string[]
   ): Promise<LuigiNode[]> {
-    console.info(
-      `Processing local nodes for the entities ${currentEntities.join(',')}`
-    );
+    // console.info(
+    //   `Processing local nodes for the entities ${currentEntities.join(',')}`
+    // );
     const localNodes: any = [];//await this.localCdmService.getLocalNodes();
 
     if (localNodes.length == 0) {

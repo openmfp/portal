@@ -397,7 +397,7 @@ export class LuigiconfigService {
             });
         } else {
           const childrenList = await createChildrenList(staticChildren);
-          console.info(`children list ${childrenList.length}`);
+          // console.info(`children list ${childrenList.length}`);
           resolve(
             this.luigiNodesService.replaceServerNodesWithLocalOnes(
               childrenList,
@@ -539,7 +539,7 @@ export class LuigiconfigService {
     };
   }
 
-  private getRoutingConfig() {
+  private getRoutingConfig() {  
     return {
       useHashRouting: false,
       showModalPathInUrl: true,
