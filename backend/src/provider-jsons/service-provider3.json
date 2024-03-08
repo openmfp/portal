@@ -3,6 +3,9 @@
   "luigiConfigFragment": [
     {
       "data": {
+        "nodeDefaults": {
+          "entityType": "example"
+        },
         "nodes": [
           {
             "pathSegment": "empty",
@@ -15,7 +18,7 @@
             "loadingIndicator": {
               "enabled": false
             },
-            "viewUrl": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/empty-demo-page.html"
+            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/empty-demo-page.html"
           },
           {
             "pathSegment": "table",
@@ -24,7 +27,7 @@
             "loadingIndicator": {
               "enabled": false
             },
-            "viewUrl": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/table-demo-page.html"
+            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/table-demo-page.html"
           },
           {
             "pathSegment": "tree",
@@ -33,7 +36,7 @@
             "loadingIndicator": {
               "enabled": false
             },
-            "viewUrl": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/tree-demo-page.html"
+            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/tree-demo-page.html"
           }
         ]
       }
