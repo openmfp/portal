@@ -2,5 +2,5 @@
  * Public API Surface of frontend-lib
  */
 
-export * from './lib/frame.module';
-export * from './lib/frame.component';
+export * from './lib/portal.module';
+export * from './lib/portal.component';

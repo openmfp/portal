@@ -6,7 +6,7 @@ import { ClientEnvironment } from '../../env/client-environment';
 import { AuthService } from '../auth.service';
 import { LuigiNode, PortalConfig } from '../../../../../../../backend/libs/portal-lib/src/luigiNode';
 import { LuigiNodesService } from '../luigiNodes/luigi-nodes.service';
-import { ConfigService } from '../frameConfig/config.service';
+import { ConfigService } from '../portalConfig/config.service';
 import { NodeSortingService } from './nodeSorting.service';
 
 
@@ -82,13 +82,13 @@ export class LuigiconfigService {
     );
     const viewGroupSettings = this.buildViewGroups(allNodes);
     const username = this.authService.getUsername();
-    const frameConfig = await this.configService.getPortalConfig();
+    const portalConfig = await this.configService.getPortalConfig();
     const luigiNodes = await this.nodesFn(
       childrenByEntity,
-      frameConfig,
+      portalConfig,
       envConfig
     );
-    const featureToggles = frameConfig.featureToggles;
+    const featureToggles = portalConfig.featureToggles;
     for (const featureToggleName of Object.keys(featureToggles)) {
       if (featureToggles[featureToggleName]) {
         this.luigiCoreService.setFeatureToggle(featureToggleName);
@@ -224,9 +224,9 @@ export class LuigiconfigService {
   ) {
     if (Array.isArray(node.children)) {
       this.nodeSortingService.markEntityRootChildren(node.children);
-      node._frameDirectChildren = node.children;
+      node._portalDirectChildren = node.children;
     }
-    const directChildren = node._frameDirectChildren || [];
+    const directChildren = node._portalDirectChildren || [];
     let newEntityPath = parentEntityPath;
     if (node.defineEntity) {
       if (parentEntityPath && parentEntityPath.length > 0) {

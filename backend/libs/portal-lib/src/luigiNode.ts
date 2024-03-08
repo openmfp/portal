@@ -73,11 +73,14 @@ export interface LuigiNode {
   label?: string;
   pathSegment?: string;
   viewUrl?: string;
-  children?: LuigiNode[] | {
-    (context?: any): Promise<LuigiNode[]>;
-  } | {
-    (context?: any): LuigiNode[];
-  };
+  children?:
+    | LuigiNode[]
+    | {
+        (context?: any): Promise<LuigiNode[]>;
+      }
+    | {
+        (context?: any): LuigiNode[];
+      };
   context?: Record<string, any>;
   viewGroup?: string;
   _dxpPreloadUrl?: string;
@@ -85,7 +88,7 @@ export interface LuigiNode {
   _dxpUserSettingsConfig?: LuigiUserSettingsConfig;
   _intentMappings?: LuigiIntent[];
   _entityRelativePaths?: Record<string, any>;
-  _frameDirectChildren?: LuigiNode[];
+  _portalDirectChildren?: LuigiNode[];
   _entityRootChild?: boolean;
   navSlot?: string;
   defineSlot?: string;
@@ -139,7 +142,6 @@ export interface LuigiNode {
   helpContext?: HelpContext;
 }
 
-
 export interface ServiceProvider {
   nodes: LuigiNode[];
   config: Record<string, string>;
@@ -149,7 +151,7 @@ export interface ServiceProvider {
 export interface PortalConfig {
   providers: ServiceProvider[];
   tenantId: string;
-  frameContext: Record<string, any>;
+  portalContext: Record<string, any>;
   featureToggles: Record<string, boolean>;
 }
 export interface EntityConfig {

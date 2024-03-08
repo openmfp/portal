@@ -1,31 +1,31 @@
 import { CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
 import { TestBed } from '@angular/core/testing'; // 1
-import { FrameComponent } from './frame.component';
+import { PortalComponent } from './portal.component';
 import { LuigiComponent } from './luigi/luigi.component';
 
-describe('FrameComponent', () => {
+describe('PortalComponent', () => {
   let fixture;
-  let frame: any;
+  let portal: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        FrameComponent,
+        PortalComponent,
         LuigiComponent,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
-      .overrideComponent(FrameComponent, {
+      .overrideComponent(PortalComponent, {
         add: { encapsulation: ViewEncapsulation.None },
       })
       .compileComponents();
   });
   beforeEach(() => {
-    fixture = TestBed.createComponent(FrameComponent);
-    frame = fixture.debugElement.componentInstance;
+    fixture = TestBed.createComponent(PortalComponent);
+    portal = fixture.debugElement.componentInstance;
     fixture.detectChanges();
   });
-  it('should create the frame', () => {
-    expect(frame).toBeTruthy();
+  it('should create the portal', () => {
+    expect(portal).toBeTruthy();
   });
 });

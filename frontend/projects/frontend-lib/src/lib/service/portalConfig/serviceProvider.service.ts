@@ -19,7 +19,7 @@ export class ServiceProviderService {
   async getRawConfigsForTenant(): Promise<ServiceProvider[]> {
     return this.configService
       .getPortalConfig()
-      .then((frameConfig: PortalConfig) => frameConfig.providers || []);
+      .then((portalConfig: PortalConfig) => portalConfig.providers || []);
   }
 
   async getRawConfigsForEntity(

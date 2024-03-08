@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ServiceProviderService } from '../frameConfig/serviceProvider.service';
+import { ServiceProviderService } from '../portalConfig/serviceProvider.service';
 // import { merge } from 'lodash';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EntityDefinition, LuigiNode, ServiceProvider } from '../../../../../../../backend/libs/portal-lib/src/luigiNode';

@@ -1,12 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-frame',
-  templateUrl: './frame.component.html',
-  styleUrls: ['./frame.component.scss'],
+  selector: 'app-portal',
+  templateUrl: './portal.component.html',
+  styleUrls: ['./portal.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FrameComponent {
+export class PortalComponent {
   configLoaded = false;
   constructor() {}
 }

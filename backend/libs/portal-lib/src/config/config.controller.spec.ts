@@ -170,7 +170,7 @@ describe('ConfigController', () => {
     );
 
     // Assert
-    expect(config.frameContext).toStrictEqual({
+    expect(config.portalContext).toStrictEqual({
       ...expectedObject,
       extensionManagerMissingMandatoryDataUrl: 'foo-url',
     });
