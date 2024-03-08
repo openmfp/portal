@@ -248,6 +248,7 @@ export class LuigiDataServiceBase {
       configurationMissing,
       configurationHint,
       configurationLink,
+      initialRoute,
     } = node;
 
     let viewGroup: string,
@@ -333,6 +334,7 @@ export class LuigiDataServiceBase {
       configurationMissing,
       configurationHint,
       configurationLink,
+      initialRoute,
     };
   }
 

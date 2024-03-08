@@ -95,6 +95,8 @@ export class LuigiconfigService {
       }
     }
 
+    const lcs = this.luigiCoreService;
+
     // const i18n = this.i18nService;
     return {
       nodes: luigiNodes,
@@ -108,7 +110,11 @@ export class LuigiconfigService {
       // nodeAccessibilityResolver: this.luigiNodesService.nodePolicyResolver,
       validWebcomponentUrls: envConfig.validWebcomponentUrls,
       //intentMapping: this.intentNavigationService.buildIntentMappings(allNodes),
-      // nodeChangeHook: function (prevNode, nextNode) {
+      nodeChangeHook: function (prevNode: LuigiNode, nextNode: LuigiNode) {
+        console.log(nextNode);
+        if(nextNode.initialRoute && nextNode.virtualTree && !(nextNode as any)._virtualTree) {
+          lcs.navigation().navigate(nextNode.initialRoute);
+        }
       //   // TODO: refactoring needed, see https://github.tools.sap/dxp/jukebox/issues/845
       //   this.helpContext = nextNode.helpContext;
 
@@ -135,7 +141,7 @@ export class LuigiconfigService {
       //   }
 
       //   this.luigiCoreService.ux().setDocumentTitle(title);
-      // }.bind(this),
+      }.bind(this),
     };
   }
 
