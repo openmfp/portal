@@ -31,16 +31,14 @@ export class LuigiconfigService {
   public async setLuigiConfiguration() {
     const envConfig: ClientEnvironment = await this.envConfigService.getEnvConfig();
 
-    const logo = location.href.includes('ft=mfp-logo') ? 
-    'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
     const config = {
       auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
       routing: this.getRoutingConfig() as any,
       settings: {
         header: {
           title: 'OpenMFP Portal',
-          logo: logo,
-          favicon: logo,
+          logo: 'about:blank',
+          favicon: 'about:blank',
         },
         experimental: {
           btpToolLayout: true
@@ -539,6 +537,10 @@ export class LuigiconfigService {
         //     config.globalSearch = this.getGlobalSearchConfig();
         //   }
         // });
+        const logo = this.luigiCoreService.isFeatureToggleActive('mfp-logo') ? 
+          'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
+        config.settings.header.logo = logo;
+        config.settings.header.favicon = logo;
         this.luigiCoreService.setConfig(config);
       },
     };
