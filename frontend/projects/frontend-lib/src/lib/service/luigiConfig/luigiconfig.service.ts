@@ -30,15 +30,15 @@ export class LuigiconfigService {
 
   public async setLuigiConfiguration() {
     const envConfig: ClientEnvironment = await this.envConfigService.getEnvConfig();
-
+    const blankImg = 'data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAAC';
     const config = {
       auth: this.authConfigService.getAuthConfig(envConfig.oauthServerUrl, envConfig.clientId),
       routing: this.getRoutingConfig() as any,
       settings: {
         header: {
           title: 'OpenMFP Portal',
-          logo: 'about:blank',
-          favicon: 'about:blank',
+          logo: blankImg,
+          favicon: blankImg,
         },
         experimental: {
           btpToolLayout: true
