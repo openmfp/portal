@@ -5,6 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prettier": "@openmfp/config-prettier",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
@@ -21,6 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@openmfp/portal-server-lib": "0.5.0",
     "@nestjs/axios": "^3.0.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
@@ -33,6 +35,8 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
+    "@openmfp/config-prettier": "0.5.0",
+    "@openmfp/eslint-config-typescript": "0.6.0",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
