@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { PortalComponent, PortalModule } from 'projects/frontend-lib/src/public-api';
+// import { PortalComponent, PortalModule } from 'projects/frontend-lib/src/public-api';
 
 @NgModule({
-  imports: [
-    PortalModule
-  ],
-  bootstrap: [PortalComponent]
+  // imports: [
+  //   PortalModule
+  // ],
+  // bootstrap: [PortalComponent]
 })
 export class AppModule {
   constructor(private router: Router) {
@@ -20,5 +20,4 @@ export class AppModule {
       );
     };
   }
- }
-
+}
