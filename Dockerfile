@@ -11,7 +11,7 @@ COPY . ./
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN --mount=type=secret,id=github_token \
-   echo "NODE_AUTH_TOKEN=$(cat /run/secrets/my_secret)" > .env
+   echo "NODE_AUTH_TOKEN=$(cat /run/secrets/github_token)" > .env
 
 WORKDIR /app/frontend
 RUN npm ci
