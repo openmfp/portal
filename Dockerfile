@@ -10,7 +10,8 @@ COPY . ./
 # https://github.com/webpack/webpack/issues/14532
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-ARG NODE_AUTH_TOKEN
+RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
+    export NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN)
 
 WORKDIR /app/frontend
 RUN npm ci
