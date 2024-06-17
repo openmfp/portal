@@ -11,7 +11,6 @@ COPY . ./
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
 ARG NODE_AUTH_TOKEN
-RUN echo ${NODE_AUTH_TOKEN:0:4}
 
 WORKDIR /app/frontend
 RUN npm ci
