@@ -10,8 +10,7 @@ COPY . ./
 # https://github.com/webpack/webpack/issues/14532
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-RUN --mount=type=secret,id=github_token,dst=/root/.github_token \
-   echo "NODE_AUTH_TOKEN=$(cat /root/.github_token)" > .env
+ARG NODE_AUTH_TOKEN
 
 WORKDIR /app/frontend
 RUN npm ci
