@@ -11,4 +11,5 @@ jobs:
     secrets: inherit
     with:
       imageTagName: ghcr.io/openmfp/portal
-      componentVersionKey: portal
+      componentVersionKey: hackathon-portal
+      release_branch: hackathon-portal
