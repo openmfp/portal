@@ -1,24 +1,30 @@
 FROM node:20.11 as build
 
-COPY frontend/package.json package-lock.json /app/frontend/
-COPY backend/package.json package-lock.json /app/backend/
+ENV NODE_AUTH_TOKEN $(cat /run/secrets/github_token)
+COPY frontend/package.json frontend/package-lock.json .npmrc /app/frontend/
+COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
+COPY package.json package-lock.json .npmrc /app/
+
+WORKDIR /app/frontend
+RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
+    NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN) && \
+    npm ci
+
+WORKDIR /app/backend
+RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
+    NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN) && \
+    npm ci
 
 WORKDIR /app
-
 COPY . ./
 
 # https://github.com/webpack/webpack/issues/14532
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
-    export NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN)
-
 WORKDIR /app/frontend
-RUN npm ci
 RUN npm run build
 
 WORKDIR /app/backend
-RUN npm ci
 RUN npm run build
 
 # prepare directory for deployment
