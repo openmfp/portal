@@ -1,3 +1,4 @@
+{{- if .Values.istio.enabled -}}
 apiVersion: "security.istio.io/v1beta1"
 kind: "PeerAuthentication"
 metadata:
@@ -9,3 +10,4 @@ spec:
       app: {{ .Release.Name }}
   mtls:
     mode: STRICT
+{{- end -}}
