@@ -1,3 +1,4 @@
+{{- if .Values.istio.enabled -}}
 apiVersion: networking.istio.io/v1beta1
 kind: Sidecar
 metadata:
@@ -9,3 +10,4 @@ spec:
       app: {{ .Release.Name }}
   outboundTrafficPolicy:
     mode: ALLOW_ANY
+{{- end -}}
