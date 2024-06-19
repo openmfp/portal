@@ -12,7 +12,7 @@
     "preinstall": "npx only-allow npm",
     "npm:install:ui": "cd frontend && npm install",
     "npm:install:server": "cd backend && npm install",
-    "build": "concurrently 'npm:build:*'",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider && concurrently 'npm:build:*'",
     "build:ui": "cd frontend && NODE_OPTIONS=--openssl-legacy-provider && npm run build",
     "build:server": "cd backend && NODE_OPTIONS=--openssl-legacy-provider && npm run build",
     "lint": "concurrently 'npm:lint:*(!fix)'",
