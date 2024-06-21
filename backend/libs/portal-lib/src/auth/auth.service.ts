@@ -108,7 +108,8 @@ export class AuthService {
 
     let tokenUrl = `${currentAuthEnv.oauthServerUrl}/oauth2/token/`
     if (currentAuthEnv.oauthServerUrl.includes('keycloak')) {
-      tokenUrl = `${currentAuthEnv.oauthServerUrl}/token`
+      const host = currentAuthEnv.oauthServerUrl.replace('localhost', 'host.containers.internal')
+      tokenUrl = `${host}/token`
     }
 
     const tokenFetchResult = await firstValueFrom(
