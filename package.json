@@ -46,5 +46,8 @@
   "lint-staged": {
     "frontend/**/*.ts": "npm run lint:ui",
     "backend/**/*.ts": "npm run lint:server"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^0.21.0"
   }
 }
