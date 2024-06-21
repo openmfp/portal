@@ -111,7 +111,7 @@ matches the snapshot:
     apiVersion: external-secrets.io/v1beta1
     kind: ExternalSecret
     metadata:
-      name: portal-client-secret-portal
+      name: RELEASE-NAME-portal-client-secret-portal
       namespace: NAMESPACE
     spec:
       data:
@@ -328,7 +328,7 @@ matches the snapshot with istio disabled:
     apiVersion: external-secrets.io/v1beta1
     kind: ExternalSecret
     metadata:
-      name: portal-client-secret-portal
+      name: RELEASE-NAME-portal-client-secret-portal
       namespace: NAMESPACE
     spec:
       data:
