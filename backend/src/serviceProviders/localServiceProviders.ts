@@ -4,8 +4,8 @@ import { join } from 'path';
 
 export class LocalServiceProviderService implements ServiceProviderService {
   async getServiceProviders(token: string, entities: string[], context: Record<string, any>): Promise<ServiceProviderResponse> {
-    let s1 = await this.createServiceProviderFromJson( 'service-provider1.json');
-    let s2 = await this.createServiceProviderFromJson('service-provider2.json');
+    let s1 = await this.createServiceProviderFromJson( 'home.json');
+    let s2 = await this.createServiceProviderFromJson('gardener.json');
     let s3 = await this.createServiceProviderFromJson('service-provider3.json');
 
     return Promise.resolve({

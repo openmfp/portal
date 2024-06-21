@@ -1,0 +1,10 @@
+apiVersion: core.openmfp.io/v1alpha1
+kind: ContentConfiguration
+metadata:
+  name: home
+  namespace: {{ .Release.Namespace }}
+spec:
+  inlineConfiguration:
+    content: |-
+      {{ .Files.Get "assets/home.json" | nindent 6 }}
+    contentType: json
