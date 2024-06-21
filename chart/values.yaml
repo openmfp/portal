@@ -11,3 +11,6 @@ port: 8080
 
 istio:
   enabled: true
+
+externalSecrets:
+  enabled: true
