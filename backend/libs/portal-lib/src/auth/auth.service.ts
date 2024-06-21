@@ -108,7 +108,7 @@ export class AuthService {
 
     let tokenUrl = `${currentAuthEnv.oauthServerUrl}/oauth2/token/`
     if (currentAuthEnv.oauthServerUrl.includes('keycloak')) {
-      const host = currentAuthEnv.oauthServerUrl.replace('localhost', 'host.containers.internal')
+      const host = currentAuthEnv.oauthServerUrl.replace('localhost', 'keycloak')
       tokenUrl = `${host}/token`
     }
 
