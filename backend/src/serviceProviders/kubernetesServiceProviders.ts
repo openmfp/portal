@@ -26,7 +26,7 @@ export class KubernetesServiceProviders implements ServiceProviderService {
       const responseItems = response.body['items'] as any[]
 
       let serviceProviders = responseItems.map(x => JSON.parse(x.status.configurationResult) as RawServiceProvider);
-      console.log(serviceProviders);
+
       return {
         serviceProviders: serviceProviders
       }
