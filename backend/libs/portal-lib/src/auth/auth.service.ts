@@ -106,10 +106,15 @@ export class AuthService {
       `${currentAuthEnv.clientId}:${currentAuthEnv.clientSecret}`
     ).toString('base64')}`;
 
+    let tokenUrl = `${currentAuthEnv.oauthServerUrl}/oauth2/token/`
+    if (currentAuthEnv.oauthServerUrl.includes('keycloak')) {
+      tokenUrl = `${currentAuthEnv.oauthServerUrl}/token`
+    }
+
     const tokenFetchResult = await firstValueFrom(
       this.httpService
         .post<AuthResponse>(
-          `${currentAuthEnv.oauthServerUrl}/oauth2/token/`,
+         tokenUrl,
           body,
           {
             headers: {
