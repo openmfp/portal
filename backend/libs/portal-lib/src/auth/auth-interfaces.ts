@@ -6,5 +6,6 @@ export interface AuthData {
 export interface AuthEnvironment {
   authData?: AuthData;
   oauthServerUrl: string;
+  tokenUrl: string;
   clientId: string;
 }

@@ -22,6 +22,7 @@ export class EnvController {
     if (authEnv.oauthServerUrl === 'none') {
       const result: ClientEnvironment = {
         oauthServerUrl: authEnv.oauthServerUrl,
+        tokenUrl: authEnv.tokenUrl,
         clientId: authEnv.clientId,
         developmentInstance: env.developmentInstance,
       };
@@ -41,6 +42,7 @@ export class EnvController {
 
     const result: ClientEnvironment = {
       oauthServerUrl: authEnv.oauthServerUrl,
+      tokenUrl: authEnv.tokenUrl,
       clientId: authEnv.clientId,
       developmentInstance: env.developmentInstance,
     };
