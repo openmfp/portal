@@ -71,6 +71,10 @@ spec:
           value: "{{ .Values.image.name }}"
         - name: COOKIE_DOMAIN
           value: {{ .Values.cookieDomain }}
+        {{- if .Values.frontendPort }}
+        - name: FRONTEND_PORT
+          value: {{ .Values.frontendPort }}
+        {{- end }}
         resources:
           limits:
             cpu: "1"
