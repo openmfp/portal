@@ -73,6 +73,8 @@ matches the snapshot:
                       name: portal-client-secret-portal
                 - name: AUTH_SERVER_URL_PORTAL
                   value: https://auth.example.com
+                - name: TOKEN_URL_PORTAL
+                  value: https://auth.example.com/oauth2/token
                 - name: BASE_DOMAINS_PORTAL
                   value: portal.example.com,portal2.example.com
                 - name: IDP_NAMES
@@ -290,6 +292,8 @@ matches the snapshot with istio disabled:
                       name: portal-client-secret-portal
                 - name: AUTH_SERVER_URL_PORTAL
                   value: https://auth.example.com
+                - name: TOKEN_URL_PORTAL
+                  value: https://auth.example.com/oauth2/token
                 - name: BASE_DOMAINS_PORTAL
                   value: portal.example.com,portal2.example.com
                 - name: IDP_NAMES

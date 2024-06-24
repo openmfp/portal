@@ -5,6 +5,7 @@ export interface EnvironmentBase {
 export interface AuthEnvironment {
     authData?: AuthData;
     oauthServerUrl: string;
+    tokenUrl: string;
     clientId: string;
 }
 export interface AuthData {
