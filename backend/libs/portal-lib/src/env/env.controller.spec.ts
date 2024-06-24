@@ -47,7 +47,7 @@ describe('EnvController', () => {
         qualtricsSiteInterceptUrl: '',
         qualtricsId: '',
         minimalPluginVersion: 0,
-        isLocal: false,
+        protocol: 'http',
         releaseNamespace: '',
         extensionManagerApiUrl: '',
         tenantId: '',

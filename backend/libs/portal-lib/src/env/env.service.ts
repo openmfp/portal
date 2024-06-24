@@ -6,7 +6,7 @@ import {AuthEnvironment, EnvironmentBase} from "./clientEnvironment";
 export interface EnvVariables extends EnvironmentBase, ServerEnv {}
 
 interface ServerEnv {
-  isLocal: boolean;
+  protocol: string;
   releaseNamespace: string;
   extensionManagerApiUrl: string;
   tenantId: string;
@@ -30,7 +30,7 @@ export class EnvService {
     return {
       idpNames: this.getIdpNames(),
       extensionManagerApiUrl: process.env.EXTENSION_MANAGER_SERVICE_API_URL,
-      isLocal: process.env.ENVIRONMENT === 'local',
+      protocol: process.env.HTTP_PROTOCOL ?? 'https',
       releaseNamespace: process.env.RELEASE_NAMESPACE,
       developmentInstance: process.env.DEVELOPMENT_INSTANCE === 'true',
       tenantId: process.env.TENANT_ID,

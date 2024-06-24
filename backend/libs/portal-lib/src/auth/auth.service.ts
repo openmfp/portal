@@ -50,10 +50,10 @@ export class AuthService {
   private getRedirectUri(request: Request) {
     let hostAndProto: string;
     const env = this.envService.getEnv();
-    if (env.isLocal) {
-      hostAndProto = `http://localhost:${env.frontendPort}`;
+    if (env.frontendPort) {
+      hostAndProto = `${env.protocol}://${request.hostname}:${env.frontendPort}`;
     } else {
-      hostAndProto = `https://${request.hostname}`;
+      hostAndProto = `${env.protocol}://${request.hostname}`;
     }
     return `${hostAndProto}/callback?storageType=none`;
   }
@@ -100,17 +100,16 @@ export class AuthService {
     request: Request,
     response: Response,
     currentAuthEnv: ServerAuthEnvironment,
-    body: URLSearchParams
+    body: URLSearchParams,
   ): Promise<AuthResponse> {
     const authorization = `${Buffer.from(
-      `${currentAuthEnv.clientId}:${currentAuthEnv.clientSecret}`
+      `${currentAuthEnv.clientId}:${currentAuthEnv.clientSecret}`,
     ).toString('base64')}`;
 
-    const tokenUrl = `${currentAuthEnv.tokenUrl}`;
     const tokenFetchResult = await firstValueFrom(
       this.httpService
         .post<AuthResponse>(
-         tokenUrl,
+          currentAuthEnv.tokenUrl,
           body,
           {
             headers: {
