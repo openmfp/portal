@@ -31,6 +31,8 @@ spec:
         securityContext:
           readOnlyRootFilesystem: true
         env:
+        - name: HTTP_PROTOCOL
+          value: {{ .Values.http.protocol }}
       {{- range $key, $idp := .Values.trust }}
         - name: OIDC_CLIENT_ID_{{ $key | upper | replace "-" "_" }}
           value: {{ $idp.loginAudience | default $idp.audience }}

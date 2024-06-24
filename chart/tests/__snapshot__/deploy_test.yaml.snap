@@ -23,6 +23,8 @@ matches the snapshot:
         spec:
           containers:
             - env:
+                - name: HTTP_PROTOCOL
+                  value: https
                 - name: OIDC_CLIENT_ID_PORTAL
                   value: 12345
                 - name: OIDC_CLIENT_SECRET_PORTAL
