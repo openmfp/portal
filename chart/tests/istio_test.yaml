@@ -1,4 +1,6 @@
-suite: deploy
+suite: istio
+templates:
+  - istio-*
 tests:
   - it: matches the snapshot
     values:
