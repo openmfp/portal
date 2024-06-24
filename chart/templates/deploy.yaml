@@ -73,7 +73,7 @@ spec:
           value: {{ .Values.cookieDomain }}
         {{- if .Values.frontendPort }}
         - name: FRONTEND_PORT
-          value: {{ .Values.frontendPort }}
+          value: "{{ .Values.frontendPort }}"
         {{- end }}
         resources:
           limits:
