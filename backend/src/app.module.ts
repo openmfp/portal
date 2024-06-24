@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PortalModule } from '@openmfp/portal-lib';
 import { join } from 'path';
-import { LocalServiceProviderService } from './serviceProviders/localServiceProviders';
 import { KubernetesServiceProviders } from './serviceProviders/kubernetesServiceProviders';
 
 @Module({
