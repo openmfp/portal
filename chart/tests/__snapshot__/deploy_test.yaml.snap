@@ -123,7 +123,7 @@ matches the snapshot with FRONTEND_PORT:
                 - name: COOKIE_DOMAIN
                   value: null
                 - name: FRONTEND_PORT
-                  value: 8080
+                  value: "8080"
               image: ghcr.io/openmfp/portal:12345
               imagePullPolicy: IfNotPresent
               name: RELEASE-NAME
