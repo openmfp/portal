@@ -18,7 +18,7 @@ export class AuthConfigService {
       storage: 'none',
       oAuth2AuthCode: {
         idpProvider: oAuth2,
-        oauthServerUrl,
+        authorizeUrl: oauthServerUrl,
         logoutUrl: '/rest/logout',
         oAuthData: {
           client_id: clientId,
