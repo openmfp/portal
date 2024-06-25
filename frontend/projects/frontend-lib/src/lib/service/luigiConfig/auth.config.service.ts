@@ -13,16 +13,12 @@ export class AuthConfigService {
   }
 
   public getAuthConfig(oauthServerUrl: string, clientId: string) {
-    let authorizeUrl = `${oauthServerUrl}/oauth2/authorize`
-    if (oauthServerUrl.includes('keycloak')) {
-      authorizeUrl = `${oauthServerUrl}/auth`
-    }
     return {
       use: 'oAuth2AuthCode',
       storage: 'none',
       oAuth2AuthCode: {
         idpProvider: oAuth2,
-        authorizeUrl,
+        oauthServerUrl,
         logoutUrl: '/rest/logout',
         oAuthData: {
           client_id: clientId,
