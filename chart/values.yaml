@@ -17,3 +17,5 @@ externalSecrets:
 
 http:
   protocol: https
+
+importContent: true

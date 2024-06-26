@@ -1,3 +1,4 @@
+{{- if .Values.importContent }}
 apiVersion: core.openmfp.io/v1alpha1
 kind: ContentConfiguration
 metadata:
@@ -8,3 +9,4 @@ spec:
     content: |-
       {{ .Files.Get "assets/gardener.json" | nindent 6 }}
     contentType: json
+  {{- end }}
