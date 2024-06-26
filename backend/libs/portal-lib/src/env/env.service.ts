@@ -36,6 +36,7 @@ export class EnvService {
       tenantId: process.env.TENANT_ID,
       frontendPort: process.env.FRONTEND_PORT,
       healthCheckInterval: parseInt(process.env.HEALTH_CHECK_INTERVAL, 10),
+      validWebcomponentUrls: (process.env.VALID_WEBCOMPONENT_URLS || '').split(','),
     };
   }
 

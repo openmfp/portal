@@ -1,6 +1,7 @@
 export interface ClientEnvironment extends AuthEnvironment, EnvironmentBase {}
 export interface EnvironmentBase {
     developmentInstance: boolean;
+    validWebcomponentUrls: string[];
 }
 export interface AuthEnvironment {
     authData?: AuthData;

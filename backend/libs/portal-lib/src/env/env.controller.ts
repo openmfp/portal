@@ -25,6 +25,7 @@ export class EnvController {
         tokenUrl: authEnv.tokenUrl,
         clientId: authEnv.clientId,
         developmentInstance: env.developmentInstance,
+        validWebcomponentUrls: env.validWebcomponentUrls,
       };
 
       result.authData = {
@@ -45,6 +46,7 @@ export class EnvController {
       tokenUrl: authEnv.tokenUrl,
       clientId: authEnv.clientId,
       developmentInstance: env.developmentInstance,
+      validWebcomponentUrls: env.validWebcomponentUrls,
     };
 
     if (authData) {
