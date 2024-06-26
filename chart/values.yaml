@@ -19,3 +19,5 @@ http:
   protocol: https
 
 importContent: true
+
+validWebcomponentUrls: ".?"
