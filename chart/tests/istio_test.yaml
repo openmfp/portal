@@ -15,3 +15,13 @@ tests:
         enabled: false
     asserts:
       - matchSnapshot: {}
+  - it: matches the snapshot with host overwrite
+    values:
+      - ../test-values.yaml
+    set:
+      istio:
+        virtualService:
+          hosts:
+            - "*"
+    asserts:
+      - matchSnapshot: {}

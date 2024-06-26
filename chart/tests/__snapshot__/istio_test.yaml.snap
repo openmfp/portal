@@ -52,3 +52,54 @@ matches the snapshot:
                 host: RELEASE-NAME.NAMESPACE.svc.cluster.local
                 port:
                   number: 8080
+matches the snapshot with host overwrite:
+  1: |
+    apiVersion: networking.istio.io/v1alpha3
+    kind: DestinationRule
+    metadata:
+      name: RELEASE-NAME
+      namespace: NAMESPACE
+    spec:
+      host: RELEASE-NAME.NAMESPACE.svc.cluster.local
+      trafficPolicy:
+        tls:
+          mode: ISTIO_MUTUAL
+  2: |
+    apiVersion: security.istio.io/v1beta1
+    kind: PeerAuthentication
+    metadata:
+      name: RELEASE-NAME
+      namespace: NAMESPACE
+    spec:
+      mtls:
+        mode: STRICT
+      selector:
+        matchLabels:
+          app: RELEASE-NAME
+  3: |
+    apiVersion: networking.istio.io/v1alpha3
+    kind: VirtualService
+    metadata:
+      name: RELEASE-NAME
+      namespace: NAMESPACE
+    spec:
+      gateways:
+        - NAMESPACE/gateway
+      hosts:
+        - '*'
+      http:
+        - corsPolicy:
+            allowHeaders:
+              - Authorization
+              - Content-Type
+              - '*'
+            allowMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+          route:
+            - destination:
+                host: RELEASE-NAME.NAMESPACE.svc.cluster.local
+                port:
+                  number: 8080
