@@ -19,7 +19,7 @@ export class AuthService {
   public setAuthData(authData: AuthData): void {
     this.frontendAuthData = {
       accessTokenExpirationDate: this.processExpDate(authData.expires_in),
-      idToken: authData.access_token,
+      idToken: authData.id_token,
     };
   }
 

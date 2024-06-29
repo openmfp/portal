@@ -16,6 +16,7 @@ describe('AuthService', () => {
     service.setAuthData({
       access_token: testToken,
       expires_in: '1213123',
+      id_token: testToken,
     });
   });
 
