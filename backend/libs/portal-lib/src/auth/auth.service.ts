@@ -139,7 +139,7 @@ export class AuthService {
     }
 
     throw new Error(
-      `Unexpected response code from ias: ${tokenFetchResult.status}, ${tokenFetchResult.statusText}`
+      `Unexpected response code from ias: ${tokenFetchResult.status}, ${tokenFetchResult.statusText}, url: ${currentAuthEnv.tokenUrl}`
     );
   }
 }

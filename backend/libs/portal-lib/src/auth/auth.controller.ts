@@ -34,13 +34,19 @@ export class AuthController {
       );
     }
 
-    const authResponse: AuthResponse = await this.authService.exchangeTokenForCode(
-      request,
-      response,
-      code.toString()
-    );
+    let authResponse: AuthResponse;
+    try {
+      const authResponse: AuthResponse = await this.authService.exchangeTokenForCode(
+        request,
+        response,
+        code.toString()
+      );
 
-    await this.authCallback.callback(authResponse.id_token);
+      await this.authCallback.callback(authResponse.id_token);
+    } catch (e: any) {
+      console.error(`error while calling authCallback: ${e}`);
+      return Promise.reject(e);
+    }
     return this.filterIasResponseForFrontend(authResponse);
   }
 
