@@ -36,7 +36,7 @@ export class AuthController {
 
     let authResponse: AuthResponse;
     try {
-      const authResponse: AuthResponse = await this.authService.exchangeTokenForCode(
+      authResponse = await this.authService.exchangeTokenForCode(
         request,
         response,
         code.toString()
