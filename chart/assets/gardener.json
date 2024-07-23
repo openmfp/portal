@@ -6,7 +6,7 @@
       "data": {
         "nodes": [
           {
-            "entityType": "example",
+            "entityType": "main",
             "pathSegment": "gardener",
             "label": "Gardener Dashboard",
             "virtualTree": true,

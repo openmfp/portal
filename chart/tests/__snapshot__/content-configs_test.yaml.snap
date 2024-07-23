@@ -16,7 +16,7 @@ matches the snapshot:
                 "data": {
                   "nodes": [
                     {
-                      "entityType": "example",
+                      "entityType": "main",
                       "pathSegment": "gardener",
                       "label": "Gardener Dashboard",
                       "virtualTree": true,
@@ -41,5 +41,36 @@ matches the snapshot:
       namespace: NAMESPACE
     spec:
       inlineConfiguration:
-        content: "\n{\n  \"name\": \"overview\",\n  \"luigiConfigFragment\": [\n    {\n      \"data\": {\n        \"nodes\": [\n          {\n            \"entityType\": \"global\",\n            \"pathSegment\": \"home\",\n            \"label\": \"Overview\",\n            \"icon\": \"home\",\n            \"hideFromNav\": true,            \n            \"defineEntity\": {\n              \"id\": \"example\"\n            },\n            \"children\": [\n              {\n                \"pathSegment\": \"overview\",\n                \"label\": \"Overview\",\n                \"icon\": \"home\",\n                \"url\": \"https://fiddle.luigi-project.io/examples/microfrontends/multipurpose.html\",\n                \"context\": {\n                  \"title\": \"Welcome to OpenMFP Portal\",\n                  \"content\": \" \"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ]\n}"
+        content: |2-
+          {
+            "name": "overview",
+            "luigiConfigFragment": [
+              {
+                "data": {
+                  "nodes": [
+                    {
+                      "entityType": "global",
+                      "pathSegment": "home",
+                      "hideFromNav": true,
+                      "defineEntity": {
+                        "id": "main"
+                      },
+                      "children": [
+                        {
+                          "pathSegment": "overview",
+                          "label": "Overview",
+                          "icon": "home",
+                          "url": "https://fiddle.luigi-project.io/examples/microfrontends/multipurpose.html",
+                          "context": {
+                            "title": "Welcome to OpenMFP Portal",
+                            "content": " "
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
         contentType: json
