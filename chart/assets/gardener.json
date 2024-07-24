@@ -6,7 +6,7 @@
       "data": {
         "nodes": [
           {
-            "entityType": "main",
+            "entityType": "main.account",
             "pathSegment": "gardener",
             "label": "Gardener Dashboard",
             "virtualTree": true,
