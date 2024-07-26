@@ -5,6 +5,8 @@ baseDomains:
   - portal.example.com
   - portal2.example.com
 
+crdGatewayApiUrl: https://api.example.com
+
 trust:
   portal:
     baseDomains: "portal.example.com,portal2.example.com"

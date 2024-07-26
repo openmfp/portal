@@ -50,6 +50,8 @@ matches the snapshot:
                   value: ghcr.io/openmfp/portal
                 - name: COOKIE_DOMAIN
                   value: null
+                - name: CRD_GATEWAY_API_URL
+                  value: https://api.example.com
                 - name: VALID_WEBCOMPONENT_URLS
                   value: .?
               image: ghcr.io/openmfp/portal:12345
@@ -124,6 +126,8 @@ matches the snapshot with FRONTEND_PORT:
                   value: ghcr.io/openmfp/portal
                 - name: COOKIE_DOMAIN
                   value: null
+                - name: CRD_GATEWAY_API_URL
+                  value: https://api.example.com
                 - name: FRONTEND_PORT
                   value: "8080"
                 - name: VALID_WEBCOMPONENT_URLS
