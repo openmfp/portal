@@ -71,6 +71,8 @@ spec:
           value: "{{ .Values.image.name }}"
         - name: COOKIE_DOMAIN
           value: {{ .Values.cookieDomain }}
+        - name: CRD_GATEWAY_API_URL
+          value: {{ .Values.crdGatewayApiUrl }}
         {{- if .Values.frontendPort }}
         - name: FRONTEND_PORT
           value: "{{ .Values.frontendPort }}"
