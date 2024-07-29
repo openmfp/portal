@@ -8,6 +8,7 @@ import { LuigiNode, PortalConfig } from '../../../../../../../backend/libs/porta
 import { LuigiNodesService } from '../luigiNodes/luigi-nodes.service';
 import { ConfigService } from '../portalConfig/config.service';
 import { NodeSortingService } from './nodeSorting.service';
+import { IframeCreationService } from './iframeCreation.service';
 
 
 @Injectable({
@@ -22,7 +23,8 @@ export class LuigiconfigService {
     private envConfigService: EnvConfigService,
     private luigiNodesService: LuigiNodesService,
     private configService: ConfigService,
-    private nodeSortingService: NodeSortingService
+    private nodeSortingService: NodeSortingService,
+    private iframeCreationService: IframeCreationService,
   ) {
 
   }
@@ -48,6 +50,8 @@ export class LuigiconfigService {
         featureToggles: { 
           queryStringParam: 'ft',
         },
+        iframeCreationInterceptor:
+          this.iframeCreationService.iFrameCreationInterceptor()
       },
       lifecycleHooks: this.getLifecycleHooksConfig(envConfig),
     };
