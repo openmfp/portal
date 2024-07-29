@@ -27,7 +27,10 @@
             "loadingIndicator": {
               "enabled": false
             },
-            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/table-demo-page.html"
+            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/table-demo-page.html",
+            "requiredIFramePermissions": {
+              "allow": ["clipboard-read", "clipboard-write"]
+            }
           },
           {
             "pathSegment": "tree",
