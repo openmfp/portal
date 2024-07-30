@@ -7,31 +7,7 @@ matches the snapshot:
       namespace: NAMESPACE
     spec:
       inlineConfiguration:
-        content: |2-
-          {
-            "name": "gardener",
-            "creationTimestamp": "2022-05-17T11:37:17Z",
-            "luigiConfigFragment": [
-              {
-                "data": {
-                  "nodes": [
-                    {
-                      "entityType": "main.account",
-                      "pathSegment": "gardener",
-                      "label": "Gardener Dashboard",
-                      "virtualTree": true,
-                      "initialRoute": "namespace",
-                      "url": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com",
-                      "icon": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg",
-                      "loadingIndicator": {
-                        "enabled": false
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
+        content: "\n{\n  \"name\": \"gardener\",\n  \"creationTimestamp\": \"2022-05-17T11:37:17Z\",\n  \"luigiConfigFragment\": [\n    {\n      \"data\": {\n        \"nodes\": [\n          {\n            \"entityType\": \"main.account\",\n            \"pathSegment\": \"gardener\",\n            \"label\": \"Gardener Dashboard\",\n            \"virtualTree\": true,\n            \"initialRoute\": \"namespace\",\n            \"url\": \"https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com\",\n            \"icon\": \"https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg\",\n            \"loadingIndicator\": {\n              \"enabled\": false\n            },\n            \"requiredIFramePermissions\": {\n              \"sandbox\": [\n                \"allow-forms\", \n                \"allow-modals\",\n                \"allow-popups\", \n                \"allow-popups-to-escape-sandbox\",\n                \"allow-same-origin\", \n                \"allow-scripts\"\n              ],\n              \"allow\": [\n                \"clipboard-read\", \n                \"clipboard-write\"\n              ]\n            }\n          }\n        ]\n      }\n    }\n  ]\n}"
         contentType: json
   2: |
     apiVersion: core.openmfp.io/v1alpha1
