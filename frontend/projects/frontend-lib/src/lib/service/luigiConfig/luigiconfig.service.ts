@@ -11,10 +11,15 @@ import { NodeSortingService } from './nodeSorting.service';
 import { IframeCreationService } from './iframeCreation.service';
 
 
+interface PortalLuigiContext {
+  portalContext: Record<string, any>;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class LuigiconfigService {
+  private context: PortalLuigiContext | undefined;
 
   constructor(
     private authService: AuthService,
@@ -47,7 +52,7 @@ export class LuigiconfigService {
         },
         btpToolLayout: true,
         responsiveNavigation: 'Fiori3',
-        featureToggles: { 
+        featureToggles: {
           queryStringParam: 'ft',
         },
         iframeCreationInterceptor:
@@ -55,7 +60,7 @@ export class LuigiconfigService {
       },
       lifecycleHooks: this.getLifecycleHooksConfig(envConfig),
     };
-    
+
     config.routing.pageNotFoundHandler = () => {
       // NO OP, needs to be disabled for initial config
     };
@@ -70,7 +75,7 @@ export class LuigiconfigService {
     this.luigiCoreService
       .auth()
       .store.setAuthData(this.authService.getAuthData());
-      
+
   }
 
 
@@ -160,7 +165,7 @@ export class LuigiconfigService {
 
     return viewGroups;
   }
-  
+
   async nodesFn(
     childrenByEntity: Record<string, LuigiNode[]>,
     portalConfig: PortalConfig,
@@ -179,6 +184,9 @@ export class LuigiconfigService {
     //     node.globalNav = node.entityType === 'global.bottom' ? 'bottom' : true;
     //   }
     // });
+    this.context = {
+      portalContext: portalConfig.portalContext,
+    }
 
     globalNodes.forEach((node) => {
       this.applyEntityChildrenRecursively(
@@ -201,7 +209,10 @@ export class LuigiconfigService {
 
     // globalNodes.sort(this.nodeSortingService.nodeComparison);
 
-    
+    globalNodes.forEach((node) => {
+      const ctx = node.context || {};
+      node.context = { ...this.context, ...ctx };
+    });
 
     globalNodes.push({
       pathSegment: 'error',
@@ -532,7 +543,7 @@ export class LuigiconfigService {
           childrenByEntity,
           envConfig
         );
-        
+
         config.lifecycleHooks = {};
         config.routing = this.getRoutingConfig();
         this.luigiCoreService.ux().hideAppLoadingIndicator();
@@ -541,7 +552,7 @@ export class LuigiconfigService {
         //     config.globalSearch = this.getGlobalSearchConfig();
         //   }
         // });
-        const logo = this.luigiCoreService.isFeatureToggleActive('mfp-logo') ? 
+        const logo = this.luigiCoreService.isFeatureToggleActive('mfp-logo') ?
           'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
         config.settings.header.logo = logo;
         config.settings.header.favicon = logo;
@@ -550,7 +561,7 @@ export class LuigiconfigService {
     };
   }
 
-  private getRoutingConfig() {  
+  private getRoutingConfig() {
     return {
       useHashRouting: false,
       showModalPathInUrl: true,
