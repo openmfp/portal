@@ -15,6 +15,20 @@
             "icon": "https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com/static/assets/logo.svg",
             "loadingIndicator": {
               "enabled": false
+            },
+            "requiredIFramePermissions": {
+              "sandbox": [
+                "allow-forms", 
+                "allow-modals",
+                "allow-popups", 
+                "allow-popups-to-escape-sandbox",
+                "allow-same-origin", 
+                "allow-scripts"
+              ],
+              "allow": [
+                "clipboard-read", 
+                "clipboard-write"
+              ]
             }
           }
         ]
