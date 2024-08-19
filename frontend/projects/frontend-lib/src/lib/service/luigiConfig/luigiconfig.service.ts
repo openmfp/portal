@@ -20,6 +20,7 @@ interface PortalLuigiContext {
 })
 export class LuigiconfigService {
   private context: PortalLuigiContext | undefined;
+  specialTenant: string | undefined;
 
   constructor(
     private authService: AuthService,
@@ -56,7 +57,22 @@ export class LuigiconfigService {
           queryStringParam: 'ft',
         },
         iframeCreationInterceptor:
-          this.iframeCreationService.iFrameCreationInterceptor()
+          this.iframeCreationService.iFrameCreationInterceptor(),
+        theming : {
+          themes: () => [
+              { id: 'sap_horizon', name: 'Light' },
+              { id: 'sap_horizon_dark', name: 'Dark' }
+            ],
+          defaultTheme: 'sap_horizon',
+          nodeViewURLDecorator: {
+            queryStringParameter: {
+            keyName: 'sap-theme',
+              value: (themeId: string) => {
+                return themeId;
+              }
+            }
+          }
+        }
       },
       lifecycleHooks: this.getLifecycleHooksConfig(envConfig),
     };
@@ -69,6 +85,31 @@ export class LuigiconfigService {
     // modal handling needs to be disabled for initial config
     config.routing.showModalPathInUrl = false;
     config.routing.modalPathParam = 'modalPathParamDisabled'; // workaround, this line can be removed after luigi checks showModalPathInUrl initially (https://github.com/SAP/luigi/issues/2291)
+
+
+    // POC-code 
+    this.specialTenant = (window.location.origin.indexOf('localhost') >= 0 && 'cloud') || 
+      (window.location.origin.indexOf('127.0.0.1') >= 0 && 'nuage') || undefined;
+    // const isSpecialTenant = (window.location.origin.indexOf('cloudfabrik') >= 0 && 'cloud') || 
+    //   (window.location.origin.indexOf('nuage') >= 0 && 'nuage') || undefined;
+    
+
+    if (this.specialTenant) {
+      const theme = this.specialTenant === 'cloud' ? 'sap_horizon_dark' : 'sap_horizon';
+      const style = document.createElement('link');
+      style.setAttribute('rel', 'stylesheet'),
+      style.setAttribute('href', 'https://cdn.jsdelivr.net/npm/@sap-theming/theming-base-content/content/Base/baseLib/' + theme + '/css_variables.css');
+      document.head.append(style);
+      const style2 = document.createElement('link');
+      style2.setAttribute('rel', 'stylesheet'),
+      style2.setAttribute('href', 'https://cdn.jsdelivr.net/npm/fundamental-styles@0.37.4/dist/theming/' + theme + '.css');
+      document.head.append(style2);
+
+      config.settings.header.title = this.specialTenant === 'cloud' ? 'CloudFabrik' : 'ÉcoNuageTech';
+      config.settings.header.logo = this.specialTenant === 'cloud' ? './assets/cloudfabrik.svg' : './assets/econuage.svg';
+      config.settings.header.favicon = config.settings.header.logo;
+    }
+
 
     this.luigiCoreService.setConfig(config);
 
@@ -539,10 +580,15 @@ export class LuigiconfigService {
         }
 
         const config = this.luigiCoreService.getConfig();
-        config.navigation = await this.getNavigationConfig(
-          childrenByEntity,
-          envConfig
-        );
+        try {
+          config.navigation = await this.getNavigationConfig(
+            childrenByEntity,
+            envConfig
+          );
+        } catch (e) {
+          console.error(`Error retrieving Luigi navigation config ${e}`);
+          // this.openErrorDialog();
+        } 
 
         config.lifecycleHooks = {};
         config.routing = this.getRoutingConfig();
@@ -552,10 +598,12 @@ export class LuigiconfigService {
         //     config.globalSearch = this.getGlobalSearchConfig();
         //   }
         // });
-        const logo = this.luigiCoreService.isFeatureToggleActive('mfp-logo') ?
-          'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
-        config.settings.header.logo = logo;
-        config.settings.header.favicon = logo;
+        if (!this.specialTenant) {
+          const logo = this.luigiCoreService.isFeatureToggleActive('mfp-logo') ?
+            'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
+          config.settings.header.logo = logo;
+          config.settings.header.favicon = logo;
+        }
         this.luigiCoreService.setConfig(config);
       },
     };
