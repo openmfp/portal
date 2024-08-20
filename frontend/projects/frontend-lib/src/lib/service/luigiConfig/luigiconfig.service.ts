@@ -90,7 +90,7 @@ export class LuigiconfigService {
     // POC-code 
     // this.specialTenant = (window.location.origin.indexOf('localhost') >= 0 && 'cloud') || 
     //   (window.location.origin.indexOf('127.0.0.1') >= 0 && 'nuage') || undefined;
-    const isSpecialTenant = (window.location.origin.indexOf('cloudfabrik') >= 0 && 'cloud') || 
+    this.specialTenant = (window.location.origin.indexOf('cloudfabrik') >= 0 && 'cloud') || 
       (window.location.origin.indexOf('econuagetech') >= 0 && 'nuage') || undefined;
     
 
