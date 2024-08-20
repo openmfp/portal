@@ -105,6 +105,7 @@ export class LuigiconfigService {
       style2.setAttribute('href', 'https://cdn.jsdelivr.net/npm/fundamental-styles@0.37.4/dist/theming/' + theme + '.css');
       document.head.append(style2);
 
+      config.settings.theming.defaultTheme = theme;
       config.settings.header.title = this.specialTenant === 'cloud' ? 'CloudFabrik' : 'ÉcoNuageTech';
       config.settings.header.logo = this.specialTenant === 'cloud' ? './assets/cloudfabrik.svg' : './assets/econuage.svg';
       config.settings.header.favicon = config.settings.header.logo;
