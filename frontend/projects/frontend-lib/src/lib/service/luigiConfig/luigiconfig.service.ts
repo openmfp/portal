@@ -325,6 +325,7 @@ export class LuigiconfigService {
             children.filter((child) =>
               this.visibleForContext(node.context, child)
             ),
+          configurable: true,
         });
       }
     } else {
