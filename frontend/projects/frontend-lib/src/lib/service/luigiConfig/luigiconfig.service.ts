@@ -602,6 +602,7 @@ export class LuigiconfigService {
         config.communication = {
           customMessagesListeners: {
             'openmfp.refetch-nav': () => {
+              this.luigiNodesService.clearNodeCache();
               fetchNav().then(() => {
                 this.luigiCoreService.configChanged();
               });
