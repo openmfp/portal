@@ -74,4 +74,8 @@ export class ConfigService {
   clearEntityConfigCache(): void {
     this.entityConfigCache = {};
   }
+
+  clearPortalConfigCache(): void {
+    this.portalConfigCache = undefined;
+  }
 }
