@@ -572,28 +572,42 @@ export class LuigiconfigService {
         // this.i18nService.afterInit();
 
         let childrenByEntity: Record<string, LuigiNode[]> = {};
-
-        try {
-          childrenByEntity =
-            await this.luigiNodesService.retrieveChildrenByEntity();
-        } catch (e) {
-          console.error(`Error retrieving Luigi navigation nodes ${e}`);
-          // this.openErrorDialog();
-        }
-
         const config = this.luigiCoreService.getConfig();
-        try {
-          config.navigation = await this.getNavigationConfig(
-            childrenByEntity,
-            envConfig
-          );
-        } catch (e) {
-          console.error(`Error retrieving Luigi navigation config ${e}`);
-          // this.openErrorDialog();
-        } 
+
+        const fetchNav = async () => {
+          try {
+            childrenByEntity =
+              await this.luigiNodesService.retrieveChildrenByEntity();
+          } catch (e) {
+            console.error(`Error retrieving Luigi navigation nodes ${e}`);
+            // this.openErrorDialog();
+          }
+
+          
+          try {
+            config.navigation = await this.getNavigationConfig(
+              childrenByEntity,
+              envConfig
+            );
+          } catch (e) {
+            console.error(`Error retrieving Luigi navigation config ${e}`);
+            // this.openErrorDialog();
+          } 
+        };
+
+        await fetchNav();
 
         config.lifecycleHooks = {};
         config.routing = this.getRoutingConfig();
+        config.communication = {
+          customMessagesListeners: {
+            'openmfp.refetch-nav': () => {
+              fetchNav().then(() => {
+                this.luigiCoreService.configChanged();
+              });
+            }
+          }
+        }
         this.luigiCoreService.ux().hideAppLoadingIndicator();
         // childrenByEntity['global']?.forEach((node) => {
         //   if (node.pathSegment === 'search') {
