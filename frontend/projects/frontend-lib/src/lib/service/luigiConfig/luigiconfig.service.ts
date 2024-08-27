@@ -44,7 +44,7 @@ export class LuigiconfigService {
       routing: this.getRoutingConfig() as any,
       settings: {
         header: {
-          title: 'OpenMFP Portal',
+          title: 'AperiroRA Portal',
           logo: blankImg,
           favicon: blankImg,
         },
@@ -617,8 +617,9 @@ export class LuigiconfigService {
         //   }
         // });
         if (!this.specialTenant) {
-          const logo = this.luigiCoreService.isFeatureToggleActive('mfp-logo') ?
-            'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
+          // const logo = this.luigiCoreService.isFeatureToggleActive('mfp-logo') ?
+          //   'assets/mfp_mark.svg' : 'assets/ora-mark.svg';
+          const logo = 'assets/apeirora-mark.svg'
           config.settings.header.logo = logo;
           config.settings.header.favicon = logo;
         }
