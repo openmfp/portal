@@ -44,7 +44,7 @@ export class LuigiconfigService {
       routing: this.getRoutingConfig() as any,
       settings: {
         header: {
-          title: 'AperiroRA Portal',
+          title: 'ApeiroRA Portal',
           logo: blankImg,
           favicon: blankImg,
         },
