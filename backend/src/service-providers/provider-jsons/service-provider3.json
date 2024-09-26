@@ -1,6 +1,6 @@
 {
   "name": "misc",
-  "luigiConfigFragment": [
+  "luigiConfigFragment":
     {
       "data": {
         "nodeDefaults": {
@@ -41,5 +41,4 @@
         ]
       }
     }
-  ]
 }

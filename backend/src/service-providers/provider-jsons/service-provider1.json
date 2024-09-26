@@ -1,6 +1,6 @@
 {
   "name": "overview",
-  "luigiConfigFragment": [
+  "luigiConfigFragment":
     {
       "data": {
         "nodes": [
@@ -29,5 +29,4 @@
         ]
       }
     }
-  ]
 }

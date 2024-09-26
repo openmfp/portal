@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { join } from 'path';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import { LocalServiceProviderService } from './service-providers/localServiceProviders';
+import { config } from 'dotenv';
+
+config({ path: './.env' });
 
 const portalOptions: PortalModuleOptions = {
   frontendDistSources: join(__dirname, '../..', 'frontend/dist/frontend'),
@@ -10,7 +13,5 @@ const portalOptions: PortalModuleOptions = {
 
 @Module({
   imports: [PortalModule.create(portalOptions)],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
