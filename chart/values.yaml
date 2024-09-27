@@ -8,3 +8,9 @@ deployment:
   maxSurge: 5
 
 port: 8080
+
+istio:
+  enabled: true
+
+externalSecrets:
+  enabled: true
