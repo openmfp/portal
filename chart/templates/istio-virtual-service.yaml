@@ -8,10 +8,14 @@ spec:
   gateways:
   - {{ .Release.Namespace }}/gateway
   hosts:
+  {{- if (.Values.istio.virtualService).hosts }}
+{{ .Values.istio.virtualService.hosts | toYaml | nindent 2}}
+  {{- else }}
   {{ range $domainName := .Values.baseDomains }}
   - {{ $domainName }}
   {{- range $key, $idp := $.Values.trust }}
   - {{ $key }}.{{ $domainName }}
+  {{- end }}
   {{- end }}
   {{- end }}
   http:

@@ -14,3 +14,10 @@ istio:
 
 externalSecrets:
   enabled: true
+
+http:
+  protocol: https
+
+importContent: true
+
+validWebcomponentUrls: ".?"

@@ -1,4 +1,6 @@
-suite: deploy
+suite: istio
+templates:
+  - istio-*
 tests:
   - it: matches the snapshot
     values:
@@ -11,5 +13,15 @@ tests:
     set:
       istio:
         enabled: false
+    asserts:
+      - matchSnapshot: {}
+  - it: matches the snapshot with host overwrite
+    values:
+      - ../test-values.yaml
+    set:
+      istio:
+        virtualService:
+          hosts:
+            - "*"
     asserts:
       - matchSnapshot: {}
