@@ -1,4 +1,5 @@
 import {
+  ContentConfiguration,
   RawServiceProvider,
   ServiceProviderResponse,
   ServiceProviderService,
@@ -6,7 +7,9 @@ import {
 import * as k8s from '@kubernetes/client-node';
 import { CustomObjectsApi } from '@kubernetes/client-node';
 
-export class KubernetesServiceProviders implements ServiceProviderService {
+export class KubernetesServiceProvidersService
+  implements ServiceProviderService
+{
   private k8sApi: CustomObjectsApi;
 
   constructor() {
@@ -36,12 +39,14 @@ export class KubernetesServiceProviders implements ServiceProviderService {
 
       const responseItems = response.body['items'] as any[];
 
-      let serviceProviders = responseItems.map(
-        (x) => JSON.parse(x.status.configurationResult) as RawServiceProvider
+      let contentConfigurations = responseItems.map(
+        (x) => JSON.parse(x.status.configurationResult) as ContentConfiguration
       );
 
       return {
-        serviceProviders: serviceProviders,
+        serviceProviders: [
+          { contentConfiguration: contentConfigurations } as RawServiceProvider,
+        ],
       };
     } catch (error) {
       console.error(error);
