@@ -12,12 +12,12 @@ export class LuigiDataServiceBase {
   }
 
   async getLuigiDataFromFragment(
-    cdm: LuigiConfigFragment[],
+    cdm: LuigiConfigFragment,
     language: string,
     extendedLuigiConfigFragment?: ExtendedLuigiConfigFragment,
   ): Promise<LuigiNode[]> {
     const nodeArrays = await Promise.allSettled(
-      cdm.map(async (c) => {
+      [cdm].map(async (c) => {
         let data: Record<any, any>;
         if (c.data) {
           data = c.data;
@@ -42,9 +42,11 @@ export class LuigiDataServiceBase {
       const checkedNodes = nodeArray.value.map((node) => {
         const isMissingMandatoryData =
           extendedLuigiConfigFragment?.isMissingMandatoryData || undefined;
-        const helpContext = extendedLuigiConfigFragment?.helpContext || undefined;
-        const extensionClassName =
-          this.getExtensionClassNameForNode(extendedLuigiConfigFragment);
+        const helpContext =
+          extendedLuigiConfigFragment?.helpContext || undefined;
+        const extensionClassName = this.getExtensionClassNameForNode(
+          extendedLuigiConfigFragment,
+        );
         const context =
           node.context || extensionClassName
             ? { ...node.context, extensionClassName }
@@ -81,10 +83,10 @@ export class LuigiDataServiceBase {
     const { textDictionary } = this.findMatchedDictionary(data.texts, language);
 
     textDictionary &&
-    Object.entries(textDictionary).forEach(([key, value]) => {
-      const searchRegExp = new RegExp(`{{${key}}}`, 'g');
-      cdmString = cdmString.replace(searchRegExp, value.toString());
-    });
+      Object.entries(textDictionary).forEach(([key, value]) => {
+        const searchRegExp = new RegExp(`{{${key}}}`, 'g');
+        cdmString = cdmString.replace(searchRegExp, value.toString());
+      });
 
     return JSON.parse(cdmString) as Record<string, any>;
   }
@@ -112,8 +114,7 @@ export class LuigiDataServiceBase {
 
   private processLugiFragment(data, cdmUri: string | undefined): LuigiNode[] {
     const luigiNavConfig = data as LuigiNavConfig;
-    const luigiAppConfig: LuigiAppConfig =
-      data;
+    const luigiAppConfig: LuigiAppConfig = data;
     const luigiIntentInboundList: CrossNavigationInbounds =
       data.crossNavigation?.inbounds;
     return this._createNodes(

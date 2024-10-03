@@ -4,7 +4,7 @@ import { HelpCenterData } from './help-center.data';
 
 export interface RawServiceProvider {
   name: string;
-  luigiConfigFragment: LuigiConfigFragment[];
+  luigiConfigFragment: LuigiConfigFragment;
   config?: Record<string, string>;
   creationTimestamp?: string;
   installationData?: Record<string, string>;
@@ -22,7 +22,7 @@ export interface ServiceProviderService {
   getServiceProviders(
     token: string,
     entities: string[],
-    context: Record<string, any>
+    context: Record<string, any>,
   ): Promise<ServiceProviderResponse>;
 }
 
