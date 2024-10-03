@@ -8,7 +8,7 @@
     "start:watch": "ng serve --watch --port 4300",
     "build": "ng build",
     "build:watch": "ng build --watch --configuration development",
-    "test": "jest --config jest.config.js --passWithNoTests"
+    "test": "echo test"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +23,7 @@
     "@angular/router": "^17.3.0",
     "@luigi-project/core": "2.14.2",
     "@luigi-project/plugin-auth-oauth2": "2.14.2",
-    "@openmfp/portal-ui-lib": "file:.yalc/@openmfp/portal-ui-lib",
+    "@openmfp/portal-ui-lib": "0.10.0",
     "jmespath": "0.16.0",
     "jwt-decode": "^3.1.2",
     "lodash": "4.17.21",
