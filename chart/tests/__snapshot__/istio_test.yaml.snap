@@ -30,8 +30,8 @@ matches the snapshot:
                     secretKeyRef:
                       key: secret
                       name: portal-client-secret-portal
-                - name: AUTH_SERVER_URL_PORTAL
-                  value: https://auth.example.com
+                - name: DISCOVERY_ENDPOINT_PORTAL
+                  value: https://auth.example.com/.well-known/openid-configuration
                 - name: BASE_DOMAINS_PORTAL
                   value: portal.example.com,portal2.example.com
                 - name: IDP_NAMES
@@ -206,8 +206,8 @@ matches the snapshot with istio disabled:
                     secretKeyRef:
                       key: secret
                       name: portal-client-secret-portal
-                - name: AUTH_SERVER_URL_PORTAL
-                  value: https://auth.example.com
+                - name: DISCOVERY_ENDPOINT_PORTAL
+                  value: https://auth.example.com/.well-known/openid-configuration
                 - name: BASE_DOMAINS_PORTAL
                   value: portal.example.com,portal2.example.com
                 - name: IDP_NAMES
