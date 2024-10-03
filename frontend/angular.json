@@ -8,9 +8,6 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -23,7 +20,9 @@
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -95,13 +94,9 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -113,38 +108,9 @@
           }
         }
       }
-    },
-    "frontend-lib": {
-      "projectType": "library",
-      "root": "projects/frontend-lib",
-      "sourceRoot": "projects/frontend-lib/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/frontend-lib/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/frontend-lib/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/frontend-lib/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/frontend-lib/src/test.ts",
-            "tsConfig": "projects/frontend-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/frontend-lib/karma.conf.js"
-          }
-        }
-      }
     }
   },
-  "defaultProject": "frontend"
+  "cli": {
+    "analytics": false
+  }
 }

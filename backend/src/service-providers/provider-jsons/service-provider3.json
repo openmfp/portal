@@ -1,0 +1,47 @@
+{
+  "name": "misc",
+  "luigiConfigFragment":
+    {
+      "data": {
+        "nodeDefaults": {
+          "entityType": "example"
+        },
+        "nodes": [
+          {
+            "pathSegment": "empty",
+            "label": "Empty Page",
+            "category": {
+              "label": "Fundamental Demo Pages",
+              "icon": "dimension",
+              "collapsible": true
+            },
+            "loadingIndicator": {
+              "enabled": false
+            },
+            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/empty-demo-page.html"
+          },
+          {
+            "pathSegment": "table",
+            "label": "Table",
+            "category": "Fundamental Demo Pages",
+            "loadingIndicator": {
+              "enabled": false
+            },
+            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/table-demo-page.html",
+            "requiredIFramePermissions": {
+              "allow": ["clipboard-read", "clipboard-write"]
+            }
+          },
+          {
+            "pathSegment": "tree",
+            "label": "Tree",
+            "category": "Fundamental Demo Pages",
+            "loadingIndicator": {
+              "enabled": false
+            },
+            "url": "https://fiddle.luigi-project.io/examples/microfrontends/fundamental/tree-demo-page.html"
+          }
+        ]
+      }
+    }
+}

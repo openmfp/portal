@@ -1,24 +1,8 @@
 import { NgModule } from '@angular/core';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
-import { PortalComponent, PortalModule } from 'projects/frontend-lib/src/public-api';
+import { PortalComponent, PortalModule } from '@openmfp/portal-ui-lib';
 
 @NgModule({
-  imports: [
-    PortalModule
-  ],
-  bootstrap: [PortalComponent]
+  imports: [PortalModule.forRoot()],
+  bootstrap: [PortalComponent],
 })
-export class AppModule {
-  constructor(private router: Router) {
-    router.routeReuseStrategy.shouldReuseRoute = (
-      future: ActivatedRouteSnapshot,
-      curr: ActivatedRouteSnapshot,
-    ) => {
-      return (
-        future.routeConfig === curr.routeConfig ||
-        future.routeConfig?.component === curr.routeConfig?.component
-      );
-    };
-  }
- }
-
+export class AppModule {}

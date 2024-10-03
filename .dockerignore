@@ -20,6 +20,7 @@
 !backend/nest-cli.json
 
 ## root
+!.npmrc
 !tsconfig.base.json
 !package.json
 !package-lock.json

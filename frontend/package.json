@@ -1,40 +1,46 @@
 {
   "name": "frontend",
   "version": "0.0.0",
+  "prettier": "@openmfp/config-prettier",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:watch": "ng serve --port 4300",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "echo 'no tests for now'"
+    "start": "ng serve --port 4300",
+    "start:watch": "ng serve --watch --port 4300",
+    "build": "ng build",
+    "build:watch": "ng build --watch --configuration development",
+    "test": "echo test"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~12.2.0",
-    "@angular/common": "~12.2.0",
-    "@angular/compiler": "~12.2.0",
-    "@angular/core": "~12.2.0",
-    "@angular/forms": "~12.2.0",
-    "@angular/platform-browser": "~12.2.0",
-    "@angular/platform-browser-dynamic": "~12.2.0",
-    "@angular/router": "~12.2.0",
-    "@luigi-project/core": "2.9.1-dev.202403131344",
-    "rxjs": "~7.8.1",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.11.4",
+    "@angular/animations": "^17.3.0",
+    "@angular/common": "^17.3.0",
+    "@angular/compiler": "^17.3.0",
+    "@angular/core": "^17.3.0",
+    "@angular/forms": "^17.3.0",
+    "@angular/localize": "^17.3.0",
+    "@angular/platform-browser": "^17.3.0",
+    "@angular/platform-browser-dynamic": "^17.3.0",
+    "@angular/router": "^17.3.0",
+    "@luigi-project/core": "2.14.2",
+    "@luigi-project/plugin-auth-oauth2": "2.14.2",
+    "@openmfp/portal-ui-lib": "0.10.0",
+    "jmespath": "0.16.0",
     "jwt-decode": "^3.1.2",
-    "@luigi-project/plugin-auth-oauth2": "2.7.5",
-
-    "lodash": "4.17.21"
+    "lodash": "4.17.21",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.14.7"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.2.0",
-    "@angular/cli": "~12.2.0",
-    "@angular/compiler-cli": "~12.2.0",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^12.11.1",
-    "ng-packagr": "^12.1.1",
-    "typescript": "~4.3.5"
+    "@angular-builders/jest": "^17.0.3",
+    "@angular-devkit/build-angular": "^17.3.0",
+    "@angular/cli": "^17.3.0",
+    "@angular/compiler-cli": "^17.3.0",
+    "@briebug/jest-schematic": "^6.0.0",
+    "@openmfp/config-prettier": "^0.5.0",
+    "@openmfp/eslint-config-typescript": "^0.6.0",
+    "@types/jest": "^29.5.1",
+    "jest": "29.7.0",
+    "typescript": "~5.4.2"
   }
 }
