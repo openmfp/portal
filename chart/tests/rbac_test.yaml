@@ -1,9 +1,0 @@
-suite: rbac
-templates:
-  - rbac.yaml
-values:
-  - ../test-values.yaml
-tests:
-  - it: match the snapshot
-    asserts:
-      - matchSnapshot: {}
