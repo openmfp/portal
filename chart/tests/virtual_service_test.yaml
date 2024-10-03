@@ -1,9 +1,0 @@
-suite: virtual service
-templates:
-  - virtual-service.yaml
-values:
-  - ../test-values.yaml
-tests:
-  - it: virtual service match the snapshot
-    asserts:
-      - matchSnapshot: {}
