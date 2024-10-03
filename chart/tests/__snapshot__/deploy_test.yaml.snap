@@ -108,10 +108,8 @@ matches the snapshot with FRONTEND_PORT:
                     secretKeyRef:
                       key: secret
                       name: portal-client-secret-portal
-                - name: AUTH_SERVER_URL_PORTAL
-                  value: https://auth.example.com
-                - name: TOKEN_URL_PORTAL
-                  value: https://auth.example.com/oauth2/token
+                - name: DISCOVERY_ENDPOINT_PORTAL
+                  value: https://auth.example.com/.well-known/openid-configuration
                 - name: BASE_DOMAINS_PORTAL
                   value: portal.example.com,portal2.example.com
                 - name: IDP_NAMES

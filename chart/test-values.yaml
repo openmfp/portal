@@ -11,6 +11,6 @@ trust:
   portal:
     baseDomains: "portal.example.com,portal2.example.com"
     authDomain: https://auth.example.com
-    tokenUrl: https://auth.example.com/oauth2/token
+    discoveryEndpoint: https://auth.example.com/.well-known/openid-configuration
     loginAudience: 12345
     oidcClientSecretName: portal
