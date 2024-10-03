@@ -39,8 +39,8 @@ spec:
             secretKeyRef:
               name: portal-client-secret-{{ $idp.secretKey | default $key }}
               key: secret
-        - name: AUTH_SERVER_URL_{{ $key | upper | replace "-" "_" }}
-          value: {{ $idp.authDomain | default $idp.trustedIssuer }}
+        - name: DISCOVERY_ENDPOINT_{{ $key | upper | replace "-" "_" }}
+          value: {{ $idp.discoveryEndpoint | default $idp.trustedIssuer }}
       {{- if $idp.baseDomains }}
         - name: BASE_DOMAINS_{{ $key | upper | replace "-" "_" }}
           value: {{ $idp.baseDomains }}
