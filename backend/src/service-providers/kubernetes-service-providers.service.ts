@@ -49,7 +49,7 @@ export class KubernetesServiceProvidersService
       return {
         serviceProviders: [
           {
-            contentConfiguration: [contentConfigurations[0]],
+            contentConfiguration: contentConfigurations,
           } as RawServiceProvider,
         ],
       };
