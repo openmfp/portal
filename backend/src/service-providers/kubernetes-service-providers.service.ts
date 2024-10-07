@@ -39,13 +39,18 @@ export class KubernetesServiceProvidersService
 
       const responseItems = response.body['items'] as any[];
 
-      let contentConfigurations = responseItems.map(
-        (x) => JSON.parse(x.status.configurationResult) as ContentConfiguration
-      );
+      let contentConfigurations = responseItems
+        .filter((item) => !!item.status.configurationResult)
+        .map(
+          (item) =>
+            JSON.parse(item.status.configurationResult) as ContentConfiguration
+        );
 
       return {
         serviceProviders: [
-          { contentConfiguration: contentConfigurations } as RawServiceProvider,
+          {
+            contentConfiguration: contentConfigurations,
+          } as RawServiceProvider,
         ],
       };
     } catch (error) {
