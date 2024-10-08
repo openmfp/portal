@@ -24,7 +24,7 @@ WORKDIR /app/backend
 RUN npm run build
 
 # prepare directory for deployment
-FROM node:20.11.0-alpinew
+FROM node:20.11.0-alpine
 
 # Applications
 COPY --from=build /app/backend /app/backend
