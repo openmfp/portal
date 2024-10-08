@@ -6,14 +6,10 @@ COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
 COPY package.json package-lock.json .npmrc /app/
 
 WORKDIR /app/frontend
-RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
-    NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN) && \
-    npm ci
+RUN npm ci
 
 WORKDIR /app/backend
-RUN --mount=type=secret,id=NODE_AUTH_TOKEN \
-    NODE_AUTH_TOKEN=$(cat /run/secrets/NODE_AUTH_TOKEN) && \
-    npm ci
+RUN npm ci
 
 WORKDIR /app
 COPY . ./
