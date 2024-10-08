@@ -1,6 +1,5 @@
 FROM node:20.11 as build
 
-ENV NODE_AUTH_TOKEN $(cat /run/secrets/github_token)
 COPY frontend/package.json frontend/package-lock.json .npmrc /app/frontend/
 COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
 COPY package.json package-lock.json .npmrc /app/
