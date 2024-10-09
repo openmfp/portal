@@ -1,4 +1,4 @@
-FROM node:20.11 as build
+FROM node:20.11 AS build
 
 COPY frontend/package.json frontend/package-lock.json .npmrc /app/frontend/
 COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
