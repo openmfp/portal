@@ -4,18 +4,13 @@ COPY frontend/package.json frontend/package-lock.json .npmrc /app/frontend/
 COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
 COPY package.json package-lock.json .npmrc /app/
 
-RUN --mount=type=secret,id=github_token \
-    sh -c "cd /app/frontend && NODE_AUTH_TOKEN=$(cat /run/secrets/github_token) npm ci" && \
-    sh -c "cd /app/backend && NODE_AUTH_TOKEN=$(cat /run/secrets/github_token) npm ci"
-
 WORKDIR /app
+RUN --mount=type=secret,id=github_token \
+    NODE_AUTH_TOKEN=$(cat /run/secrets/github_token) npm ci
+
 COPY . ./
 
-# https://github.com/webpack/webpack/issues/14532
-ENV NODE_OPTIONS=--openssl-legacy-provider
-
-RUN sh -c "cd /app/frontend && npm run build" && \
-    sh -c "cd /app/backend && npm run build"
+RUN npm run build
 
 # prepare directory for deployment
 FROM node:20.11.0-alpine
