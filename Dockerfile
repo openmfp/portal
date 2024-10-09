@@ -12,10 +12,8 @@ COPY . ./
 
 RUN npm run build
 
-# prepare directory for deployment
 FROM node:20.11.0-alpine
 
-# Applications
 COPY --from=build /app/backend /app/backend
 COPY --from=build /app/frontend/dist /app/frontend/dist
 
