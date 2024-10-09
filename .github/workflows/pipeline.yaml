@@ -12,4 +12,3 @@ jobs:
     with:
       imageTagName: ghcr.io/openmfp/portal
       componentVersionKey: portal
-      multiarch: false
