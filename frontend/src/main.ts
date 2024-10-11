@@ -1,13 +1,15 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+import {
+  PortalComponent,
+  PortalOptions,
+  importPortalProviders,
+} from '@openmfp/portal-ui-lib';
+import { ApeiroraStaticSettingsConfigService } from './app/services/apeirora-static-settings-config.service';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+const portalOptions: PortalOptions = {
+  staticSettingsConfigService: ApeiroraStaticSettingsConfigService,
+};
 
-if (environment.production) {
-  enableProdMode();
-}
-
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
+bootstrapApplication(PortalComponent, {
+  providers: [importPortalProviders(portalOptions)],
+}).catch((err) => console.error(err));
