@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import {
   PortalComponent,
   PortalOptions,
-  importPortalProviders,
+  providePortal,
 } from '@openmfp/portal-ui-lib';
 import { ApeiroraStaticSettingsConfigService } from './app/services/apeirora-static-settings-config.service';
 
@@ -11,5 +11,5 @@ const portalOptions: PortalOptions = {
 };
 
 bootstrapApplication(PortalComponent, {
-  providers: [importPortalProviders(portalOptions)],
+  providers: [providePortal(portalOptions)],
 }).catch((err) => console.error(err));
