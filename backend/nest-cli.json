@@ -1,26 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
-  "compilerOptions": {
-    "deleteOutDir": true,
-    "webpack": true,
-    "assets": [
-      {
-        "include": "provider-jsons/*.json",
-        "watchAssets": true
-      }
-    ]
-  },
-  "projects": {
-    "portal-lib": {
-      "type": "library",
-      "root": "libs/portal-lib",
-      "entryFile": "index",
-      "sourceRoot": "libs/portal-lib/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/portal-lib/tsconfig.lib.json"
-      }
-    }
-  }
+  "sourceRoot": "src"
 }
