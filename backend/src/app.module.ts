@@ -8,7 +8,6 @@ import { config } from 'dotenv';
 config({ path: './.env' });
 
 const portalOptions: PortalModuleOptions = {
-  frontendDistSources: join(__dirname, '../..', 'frontend/dist/frontend'),
   serviceProviderService: KubernetesServiceProvidersService,
   portalContextProvider: OpenmfpPortalProvider,
 };
