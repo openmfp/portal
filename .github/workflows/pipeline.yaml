@@ -10,5 +10,5 @@ jobs:
     uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@make-it-possible-to-overwrite-the-chart-name
     secrets: inherit
     with:
-      imageTagName: ghcr.io/openmfp/portal
-      componentVersionKey: portal
+      imageTagName: ghcr.io/openmfp/apeiro-portal
+      componentVersionKey: apeiro-portal
