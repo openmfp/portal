@@ -13,4 +13,4 @@ jobs:
       imageTagName: ghcr.io/openmfp/apeiro-portal
       componentVersionKey: apeiro-portal
       chart: apeiro-portal
-      release_branch: apeiro
+      release_branch: apeirora
