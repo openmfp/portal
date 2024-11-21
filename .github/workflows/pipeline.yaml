@@ -10,5 +10,7 @@ jobs:
     uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@main
     secrets: inherit
     with:
-      imageTagName: ghcr.io/openmfp/portal
-      componentVersionKey: portal
+      imageTagName: ghcr.io/openmfp/apeiro-portal
+      componentVersionKey: apeiro-portal
+      chart: apeiro-portal
+      release_branch: apeiro
