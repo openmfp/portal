@@ -4,10 +4,10 @@ import {
   PortalOptions,
   providePortal,
 } from '@openmfp/portal-ui-lib';
-import { StaticSettingsConfigServiceImpl } from './app/services/static-settings-config.service';
+import { ApeiroraStaticSettingsConfigService } from './app/services/apeirora-static-settings-config.service';
 
 const portalOptions: PortalOptions = {
-  staticSettingsConfigService: StaticSettingsConfigServiceImpl,
+  staticSettingsConfigService: ApeiroraStaticSettingsConfigService,
 };
 
 bootstrapApplication(PortalComponent, {
