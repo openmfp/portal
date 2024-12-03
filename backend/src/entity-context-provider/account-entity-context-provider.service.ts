@@ -18,6 +18,8 @@ export class AccountEntityContextProvider implements EntityContextProvider {
         'watch',
         'gardener_project_create',
         'gardener_project_list',
+        'gardener_shoot_create',
+        'gardener_shoot_list',
       ],
     };
   }
