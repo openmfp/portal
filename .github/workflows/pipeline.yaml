@@ -14,3 +14,4 @@ jobs:
       componentVersionKey: apeiro-portal
       chart: apeiro-portal
       release_branch: apeirora
+      versionPrefix: apeiro-
