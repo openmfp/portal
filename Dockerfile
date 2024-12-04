@@ -1,4 +1,4 @@
-FROM node:22.11 AS build
+FROM node:22.12 AS build
 
 COPY frontend/package.json frontend/package-lock.json .npmrc /app/frontend/
 COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
@@ -12,7 +12,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM node:22.11.0-alpine
+FROM node:22.12.0-alpine
 
 COPY --from=build /app/backend /app/backend
 COPY --from=build /app/frontend/dist /app/frontend/dist
