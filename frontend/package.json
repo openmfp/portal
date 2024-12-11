@@ -23,7 +23,7 @@
     "@angular/router": "^18.0.0",
     "@luigi-project/core": "^2.18.1",
     "@luigi-project/plugin-auth-oauth2": "^2.18.1",
-    "@openmfp/portal-ui-lib": "^0.79.0",
+    "@openmfp/portal-ui-lib": "^0.80.0",
     "jmespath": "0.16.0",
     "jwt-decode": "^4.0.0",
     "lodash": "4.17.21",
