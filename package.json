@@ -24,7 +24,7 @@
     "start": "concurrently 'npm:start:*'",
     "start:ui": "cd frontend && npm run start:watch",
     "start:server": "cd backend && npm run start:debug",
-    "test": "echo test",
+    "test": "concurrently 'npm:test:*(!cov)'",
     "test:ui": "cd frontend && npm run test",
     "test:server": "cd backend && npm run test",
     "test:cov": "concurrently 'npm:test:cov:*'",
