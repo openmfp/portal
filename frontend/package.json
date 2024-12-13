@@ -8,7 +8,7 @@
     "start:watch": "ng serve --watch --port 4300",
     "build": "ng build",
     "build:watch": "ng build --watch --configuration development",
-    "test": "echo test"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
