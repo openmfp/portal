@@ -12,7 +12,7 @@ export class ApeiroraStaticSettingsConfigService
     const logo = 'assets/apeirora-mark.svg';
     const settings: any = {
       header: {
-        title: 'ApeiroRA Portal',
+        title: 'ApeiroRA Showroom',
         logo: logo,
         favicon: logo,
       },
