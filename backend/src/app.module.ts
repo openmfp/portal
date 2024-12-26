@@ -9,7 +9,11 @@ import { config } from 'dotenv';
 config({ path: './.env' });
 
 const portalOptions: PortalModuleOptions = {
-  frontendDistSources: join(__dirname, '../..', 'frontend/dist/frontend'),
+  frontendDistSources: join(
+    __dirname,
+    '../..',
+    'frontend/dist/frontend/browser'
+  ),
   entityContextProviders: {
     account: AccountEntityContextProvider,
   },
