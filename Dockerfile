@@ -14,10 +14,13 @@ RUN npm run build
 
 FROM node:22.12.0-alpine
 
-COPY --from=build /app/backend /app/backend
-COPY --from=build /app/frontend/dist /app/frontend/dist
+ENV USER_UID=1001
+ENV GROUP_UID=1001
+
+COPY --from=build --chown=${USER_UID}:${GROUP_UID} /app/backend /app/backend
+COPY --from=build --chown=${USER_UID}:${GROUP_UID} /app/frontend/dist /app/frontend/dist
 
 WORKDIR /app/backend
 EXPOSE 3000
-
+USER ${USER_UID}:${GROUP_UID}
 CMD ["node", "dist/main"]
