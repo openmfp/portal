@@ -23,12 +23,18 @@ export class KubernetesServiceProvidersService
     entities: string[],
     context: Record<string, any>
   ): Promise<ServiceProviderResponse> {
+    const entity = !entities || !entities.length ? 'main' : entities[0];
     try {
       const response = await this.k8sApi.listNamespacedCustomObject(
         'core.openmfp.io',
         'v1alpha1',
         'openmfp-system',
-        'contentconfigurations'
+        'contentconfigurations',
+        null,
+        null,
+        null,
+        null,
+        `portal.openmfp.org/entity=${entity}`
       );
 
       if (!response.body['items']) {
