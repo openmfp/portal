@@ -47,10 +47,13 @@ export class KubernetesServiceProvidersService
 
       let contentConfigurations = responseItems
         .filter((item) => !!item.status.configurationResult)
-        .map(
-          (item) =>
-            JSON.parse(item.status.configurationResult) as ContentConfiguration
-        );
+        .map((item) => {
+          const contentConfiguration = JSON.parse(
+            item.status.configurationResult
+          ) as ContentConfiguration;
+          contentConfiguration.url = item.status.url;
+          return contentConfiguration;
+        });
 
       return {
         serviceProviders: [
