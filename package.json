@@ -33,9 +33,9 @@
     "prepare": "husky && npm run npm:install:ui && npm run npm:install:server"
   },
   "devDependencies": {
-    "concurrently": "9.1.0",
+    "concurrently": "9.1.2",
     "husky": "9.1.7",
-    "lint-staged": "15.2.11"
+    "lint-staged": "15.4.1"
   },
   "husky": {
     "hooks": {

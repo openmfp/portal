@@ -1,8 +1,14 @@
-import { StaticSettingsConfigService } from '@openmfp/portal-ui-lib';
+import { inject } from '@angular/core';
+import {
+  I18nService,
+  StaticSettingsConfigService,
+} from '@openmfp/portal-ui-lib';
 
 export class ApeiroraStaticSettingsConfigService
   implements StaticSettingsConfigService
 {
+  private i18nService = inject(I18nService);
+
   getInitialStaticSettingsConfig() {
     const specialTenant =
       (window.location.origin.indexOf('cloudfabrik') >= 0 && 'cloud') ||
@@ -27,6 +33,7 @@ export class ApeiroraStaticSettingsConfigService
       appLoadingIndicator: {
         hideAutomatically: true,
       },
+      customTranslationImplementation: this.i18nService,
     };
 
     if (specialTenant) {
