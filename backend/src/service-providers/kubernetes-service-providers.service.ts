@@ -1,6 +1,5 @@
 import {
   ContentConfiguration,
-  RawServiceProvider,
   ServiceProviderResponse,
   ServiceProviderService,
 } from '@openmfp/portal-server-lib';
@@ -39,7 +38,7 @@ export class KubernetesServiceProvidersService
 
       if (!response.body['items']) {
         return {
-          serviceProviders: [],
+          rawServiceProviders: [],
         };
       }
 
@@ -56,10 +55,13 @@ export class KubernetesServiceProvidersService
         });
 
       return {
-        serviceProviders: [
+        rawServiceProviders: [
           {
+            name: 'openmfp-system',
+            displayName: '',
+            creationTimestamp: '',
             contentConfiguration: contentConfigurations,
-          } as RawServiceProvider,
+          },
         ],
       };
     } catch (error) {

@@ -4,6 +4,11 @@
   "prettier": "@openmfp/config-prettier",
   "scripts": {
     "ng": "ng",
+    "extract-versions": "node ./build-scripts/extract-versions.js",
+    "prebuild": "npm run extract-versions",
+    "prebuild:watch": "npm run extract-versions",
+    "prestart": "npm run extract-versions",
+    "prestart:watch": "npm run extract-versions",
     "start": "ng serve --port 4300",
     "start:watch": "nodemon --watch .yalc -e * --exec \"rimraf .angular && ng serve --watch --port 4300\"",
     "build": "ng build",
