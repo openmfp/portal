@@ -14,26 +14,23 @@ export class LocalServiceProviderService implements ServiceProviderService {
     context: Record<string, any>
   ): Promise<ServiceProviderResponse> {
     const p: ServiceProviderResponse = {
-      serviceProviders: [
+      rawServiceProviders: [
         {
           contentConfiguration: [s1],
           name: 'First Step',
           displayName: 'First Step',
-          config: {},
           creationTimestamp: '2022-05-17T11:37:17Z',
         },
         {
           contentConfiguration: [s2],
           name: 'Second Step',
           displayName: 'Second Step',
-          config: {},
           creationTimestamp: '2022-05-17T11:37:17Z',
         },
         {
           contentConfiguration: [s3],
           name: 'Third Step',
           displayName: 'Third Step',
-          config: {},
           creationTimestamp: '2022-05-17T11:37:17Z',
         },
       ],
