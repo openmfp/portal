@@ -10,6 +10,7 @@
 !frontend/angular.json
 !frontend/tsconfig.json
 !frontend/tsconfig.app.json
+!frontend/build-scripts/extract-versions.js
 
 ## server
 !backend/src
