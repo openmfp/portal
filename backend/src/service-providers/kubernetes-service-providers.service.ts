@@ -3,8 +3,7 @@ import {
   ServiceProviderResponse,
   ServiceProviderService,
 } from '@openmfp/portal-server-lib';
-import * as k8s from '@kubernetes/client-node';
-import { CustomObjectsApi } from '@kubernetes/client-node';
+import { KubeConfig, CustomObjectsApi } from '@kubernetes/client-node';
 
 export class KubernetesServiceProvidersService
   implements ServiceProviderService
@@ -12,9 +11,9 @@ export class KubernetesServiceProvidersService
   private k8sApi: CustomObjectsApi;
 
   constructor() {
-    const kc = new k8s.KubeConfig();
+    const kc = new KubeConfig();
     kc.loadFromDefault();
-    this.k8sApi = kc.makeApiClient(k8s.CustomObjectsApi);
+    this.k8sApi = kc.makeApiClient(CustomObjectsApi);
   }
 
   async getServiceProviders(
@@ -23,26 +22,23 @@ export class KubernetesServiceProvidersService
     context: Record<string, any>
   ): Promise<ServiceProviderResponse> {
     const entity = !entities || !entities.length ? 'main' : entities[0];
-    try {
-      const response = await this.k8sApi.listNamespacedCustomObject(
-        'core.openmfp.io',
-        'v1alpha1',
-        'openmfp-system',
-        'contentconfigurations',
-        null,
-        null,
-        null,
-        null,
-        `portal.openmfp.org/entity=${entity}`
-      );
 
-      if (!response.body['items']) {
+    try {
+      const response = await this.k8sApi.listNamespacedCustomObject({
+        group: 'core.openmfp.io',
+        version: 'v1alpha1',
+        namespace: 'openmfp-system',
+        plural: 'contentconfigurations',
+        labelSelector: `portal.openmfp.org/entity=${entity}`,
+      });
+
+      if (!response.items) {
         return {
           rawServiceProviders: [],
         };
       }
 
-      const responseItems = response.body['items'] as any[];
+      const responseItems = response.items as any[];
 
       let contentConfigurations = responseItems
         .filter((item) => !!item.status.configurationResult)
@@ -50,7 +46,7 @@ export class KubernetesServiceProvidersService
           const contentConfiguration = JSON.parse(
             item.status.configurationResult
           ) as ContentConfiguration;
-          contentConfiguration.url = item.status.url;
+          contentConfiguration.url = item.spec.remoteConfiguration.url;
           return contentConfiguration;
         });
 
