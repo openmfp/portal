@@ -7,7 +7,7 @@ concurrency:
 
 jobs:
   pipe:
-    uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@main
+    uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@test-setup-docker-macos-action
     secrets: inherit
     with:
       imageTagName: ghcr.io/openmfp/portal
