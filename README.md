@@ -1,5 +1,8 @@
 # OpenMFP Portal
 
+![Build Status](https://github.com/openmfp/portal/actions/workflows/pipeline.yml/badge.svg)
+[![REUSE status](
+https://api.reuse.software/badge/github.com/openmfp/portal)](https://api.reuse.software/info/github.com/openmfp/portal)
 
 ## Getting started
 
