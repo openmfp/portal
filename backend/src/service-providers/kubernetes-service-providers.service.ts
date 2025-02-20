@@ -46,7 +46,9 @@ export class KubernetesServiceProvidersService
           const contentConfiguration = JSON.parse(
             item.status.configurationResult
           ) as ContentConfiguration;
-          contentConfiguration.url = item.spec.remoteConfiguration.url;
+          if (!contentConfiguration.url) {
+            contentConfiguration.url = item.spec.remoteConfiguration?.url;
+          }
           return contentConfiguration;
         });
 
