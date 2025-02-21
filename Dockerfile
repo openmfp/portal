@@ -1,6 +1,6 @@
-FROM node:22.12 AS build
+FROM node:22.14 AS build
 
-COPY frontend/package.json frontend/package-lock.json .npmrc /app/frontend/
+COPY frontend/package.json frontend/build-scripts/extract-versions.js frontend/package-lock.json .npmrc /app/frontend/
 COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
 COPY package.json package-lock.json .npmrc /app/
 
@@ -12,7 +12,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM node:22.12.0-alpine
+FROM node:22.14.0-alpine
 
 ENV USER_UID=1001
 ENV GROUP_UID=1001
