@@ -5,5 +5,5 @@ SPDX-PackageDownloadLocation = "https://github.com/openmfp/portal"
 [[annotations]]
 path = "**"
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2024 SAP SE or an SAP affiliate company and openMFP contributors and portal contributors."
+SPDX-FileCopyrightText = "2025 SAP SE or an SAP affiliate company and openMFP contributors and portal contributors."
 SPDX-License-Identifier = "Apache-2.0"
