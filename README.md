@@ -6,6 +6,36 @@ https://api.reuse.software/badge/github.com/openmfp/portal)](https://api.reuse.s
 
 ## Getting started
 
+### Running the Portal locally
+
+1.  Configure the `.env` file for the backend server. Copy `.env-example` and set all missing values
+```shell
+cp backend/.env-example backend/.env
+```
+
+2. Install the dependencies
+You have to set your GitHub token to `NODE_AUTH_TOKEN`
+```shell
+export NODE_AUTH_TOKEN=<Your GitHub Token>
+```
+
+Then you can run:
+```shell
+npm install
+```
+
+3. Start the Portal application locally
+
+```shell
+npm run start
+```
+
+### Add environment variables for Portal
+
+In order to add custom variables to Portal add to your `.env` file variable with name starting from `OPENMFP_PORTAL_CONTEXT_`.
+You can verify if variable is accessible by navigating to `http://localhost:4300/rest/config`
+eg: `OPENMFP_PORTAL_CONTEXT_VARIABLE_NAME=abcd` will result with `"portalContext":{"variableName": "abcd"}`
+
 ### Use the docker build locally
 
 The docker build needs a GitHub token with a scope to access the packages of OpenMFP.
