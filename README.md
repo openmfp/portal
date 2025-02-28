@@ -32,9 +32,9 @@ npm run start
 
 ### Add environment variables for Portal
 
-In order to add custom variables to Portal add to your `.env` file variable with name starting from `OPENMFP_PORTAL_CONTEXT_`.
-You can verify if variable is accessible by navigating to `http://localhost:4300/rest/config`
-eg: `OPENMFP_PORTAL_CONTEXT_VARIABLE_NAME=abcd` will result with `"portalContext":{"variableName": "abcd"}`
+To add custom variables to Portal, include them in your `.env` file with names starting from `OPENMFP_PORTAL_CONTEXT_`.
+You can check if a variable is accessible by navigating to `http://localhost:4300/rest/config`.
+For example, `OPENMFP_PORTAL_CONTEXT_VARIABLE_NAME=abcd` transforms to `"portalContext":{"variableName": "abcd"}`.
 
 ### Use the docker build locally
 
