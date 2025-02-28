@@ -3,7 +3,6 @@ import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import * as path from 'node:path';
 import { AccountEntityContextProvider } from './entity-context-provider/account-entity-context-provider.service.js';
 import { KubernetesServiceProvidersService } from './service-providers/kubernetes-service-providers.service.js';
-import { OpenmfpPortalContextProvider } from './service-providers/portal-context-provider.js';
 import { config } from 'dotenv';
 
 const __filename = new URL(import.meta.url).pathname;
@@ -22,7 +21,6 @@ const portalOptions: PortalModuleOptions = {
   },
   additionalProviders: [AccountEntityContextProvider],
   serviceProviderService: KubernetesServiceProvidersService,
-  portalContextProvider: OpenmfpPortalContextProvider,
 };
 
 @Module({
