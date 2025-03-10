@@ -8,7 +8,7 @@ export class OpenmfpPortalProvider implements PortalContextProvider {
 
   getContextValues(): Promise<Record<string, any>> {
     const context: Record<string, any> = {
-      crdGatewayApiUrl: process.env.CRD_GATEWAY_API_URL,
+      crdGatewayApiUrl: process.env.KUBERNETES_GRAPHQL_GATEWAY_API_URL,
     };
     return Promise.resolve(context);
   }
