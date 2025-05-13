@@ -35,7 +35,7 @@
   "devDependencies": {
     "concurrently": "9.1.2",
     "husky": "9.1.7",
-    "lint-staged": "15.5.2"
+    "lint-staged": "16.0.0"
   },
   "husky": {
     "hooks": {
