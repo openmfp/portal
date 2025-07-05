@@ -38,7 +38,6 @@ export class KubernetesServiceProvidersService
       }
 
       const responseItems = response.items as any[];
-      console.log(responseItems);
 
       let contentConfigurations = responseItems
         .filter((item) => !!item.status.configurationResult)
