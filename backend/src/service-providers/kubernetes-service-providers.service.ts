@@ -24,10 +24,9 @@ export class KubernetesServiceProvidersService
     const entity = !entities || !entities.length ? 'main' : entities[0];
 
     try {
-      const response = await this.k8sApi.listNamespacedCustomObject({
+      const response = await this.k8sApi.listClusterCustomObject({
         group: 'core.openmfp.io',
         version: 'v1alpha1',
-        namespace: 'openmfp-system',
         plural: 'contentconfigurations',
         labelSelector: `portal.openmfp.org/entity=${entity}`,
       });
