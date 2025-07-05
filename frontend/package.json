@@ -52,7 +52,7 @@
     "@angular/compiler-cli": "^19.2.6",
     "@briebug/jest-schematic": "^6.0.0",
     "@openmfp/config-prettier": "^0.8.0",
-    "@openmfp/eslint-config-typescript": "^0.19.0",
+    "@openmfp/eslint-config-typescript": "^0.7.0",
     "@types/jest": "^29.5.1",
     "jest": "29.7.0",
     "nodemon": "^3.1.9",
