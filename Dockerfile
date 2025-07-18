@@ -12,7 +12,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM node:22.17.0-alpine
+FROM node:22.17.1-alpine
 
 ENV USER_UID=1001
 ENV GROUP_UID=1001
