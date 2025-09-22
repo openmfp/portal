@@ -1,5 +1,4 @@
 # Default code owners
-* @openmfp/frame
-* @openmfp/ui-approvers
+* @openmfp/frame @openmfp/ui-approvers
 package.json
 package-lock.json
