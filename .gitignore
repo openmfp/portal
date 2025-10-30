@@ -7,3 +7,5 @@ node_modules
 
 yalc.lock
 .yalc
+.claude
+CLAUDE.local.md
