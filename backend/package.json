@@ -41,7 +41,7 @@
     "@nestjs/schematics": "^10.2.3",
     "@nestjs/testing": "^10.4.6",
     "@openmfp/config-prettier": "0.9.1",
-    "@openmfp/eslint-config-typescript": "0.7.2",
+    "@openmfp/eslint-config-typescript": "0.7.3",
     "@types/express": "5.0.5",
     "@types/jest": "^29.5.2",
     "@types/node": "22.18.13",
