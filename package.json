@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": ">=20.0.0",
-    "npm": ">=9.0.0"
+    "node": "25.1.0",
+    "npm": "11.6.2"
   },
   "author": "",
   "license": "ISC",
