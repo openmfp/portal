@@ -1,12 +1,11 @@
 FROM node:22.19 AS build
 
-COPY frontend/package.json frontend/build-scripts/extract-versions.js frontend/package-lock.json .npmrc /app/frontend/
-COPY backend/package.json backend/package-lock.json .npmrc /app/backend/
-COPY package.json package-lock.json .npmrc /app/
+COPY frontend/package.json frontend/build-scripts/extract-versions.js frontend/package-lock.json /app/frontend/
+COPY backend/package.json backend/package-lock.json /app/backend/
+COPY package.json package-lock.json /app/
 
 WORKDIR /app
-RUN --mount=type=secret,id=github_token \
-    NODE_AUTH_TOKEN=$(cat /run/secrets/github_token) npm ci
+RUN npm ci
 
 COPY . ./
 
