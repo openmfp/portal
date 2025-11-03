@@ -1,5 +1,4 @@
 import { AccountEntityContextProvider } from './entity-context-provider/account-entity-context-provider.service.js';
-import { KubernetesServiceProvidersService } from './service-providers/kubernetes-service-providers.service.js';
 import { Module } from '@nestjs/common';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import { config } from 'dotenv';
@@ -20,7 +19,6 @@ const portalOptions: PortalModuleOptions = {
     account: AccountEntityContextProvider,
   },
   additionalProviders: [AccountEntityContextProvider],
-  serviceProviderService: KubernetesServiceProvidersService,
 };
 
 @Module({
