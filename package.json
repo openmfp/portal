@@ -12,7 +12,7 @@
     "preinstall": "npx only-allow npm",
     "npm:install:ui": "cd frontend && npm install",
     "npm:install:server": "cd backend && npm install",
-    "build": "concurrently 'npm:build:*'",
+    "build": "concurrently 'npm:build:ui' 'npm:build:server'",
     "build:ui": "cd frontend && npm run build",
     "build:server": "cd backend && npm run build",
     "lint": "concurrently 'npm:lint:*(!fix)'",
@@ -30,7 +30,10 @@
     "test:cov": "concurrently 'npm:test:cov:*'",
     "test:cov:ui": "cd frontend && npm run test:cov",
     "test:cov:server": "cd backend && npm run test:cov",
-    "prepare": "husky && npm run npm:install:ui && npm run npm:install:server"
+    "prepare": "husky && npm run npm:install:ui && npm run npm:install:server",
+    "build:ui:watch": "cd frontend && npm run build:watch",
+    "start:server:watch": "cd backend && npm run start:watch",
+    "start:watch": "concurrently 'npm:start:server:watch' 'npm:build:ui:watch'"
   },
   "devDependencies": {
     "concurrently": "9.2.1",
