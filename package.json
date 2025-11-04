@@ -30,7 +30,10 @@
     "test:cov": "concurrently 'npm:test:cov:*'",
     "test:cov:ui": "cd frontend && npm run test:cov",
     "test:cov:server": "cd backend && npm run test:cov",
-    "prepare": "husky && npm run npm:install:ui && npm run npm:install:server"
+    "prepare": "husky && npm run npm:install:ui && npm run npm:install:server",
+    "build:ui:watch": "cd frontend && npm run build:watch",
+    "start:server:watch": "cd backend && npm run start:watch",
+    "start:watch": "concurrently 'npm:start:server:watch' 'npm:build:ui:watch'"
   },
   "devDependencies": {
     "concurrently": "9.2.1",
@@ -46,5 +49,8 @@
   "lint-staged": {
     "frontend/**/*.ts": "npm run lint:ui",
     "backend/**/*.ts": "npm run lint:server"
+  },
+  "dependencies": {
+    "@openmfp/portal-server-lib": "file:.yalc/@openmfp/portal-server-lib"
   }
 }
