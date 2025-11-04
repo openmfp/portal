@@ -1,4 +1,3 @@
-import { AccountEntityContextProvider } from './entity-context-provider/account-entity-context-provider.service.js';
 import { Module } from '@nestjs/common';
 import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
 import { config } from 'dotenv';
@@ -15,10 +14,6 @@ const portalOptions: PortalModuleOptions = {
     '../..',
     'frontend/dist/frontend/browser',
   ),
-  entityContextProviders: {
-    account: AccountEntityContextProvider,
-  },
-  additionalProviders: [AccountEntityContextProvider],
 };
 
 @Module({
