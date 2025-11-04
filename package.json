@@ -12,7 +12,7 @@
     "preinstall": "npx only-allow npm",
     "npm:install:ui": "cd frontend && npm install",
     "npm:install:server": "cd backend && npm install",
-    "build": "concurrently 'npm:build:*'",
+    "build": "concurrently 'npm:build:ui' 'npm:build:server'",
     "build:ui": "cd frontend && npm run build",
     "build:server": "cd backend && npm run build",
     "lint": "concurrently 'npm:lint:*(!fix)'",
