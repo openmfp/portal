@@ -49,8 +49,5 @@
   "lint-staged": {
     "frontend/**/*.ts": "npm run lint:ui",
     "backend/**/*.ts": "npm run lint:server"
-  },
-  "dependencies": {
-    "@openmfp/portal-server-lib": "file:.yalc/@openmfp/portal-server-lib"
   }
 }
