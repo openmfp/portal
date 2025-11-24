@@ -30,7 +30,7 @@
     "@nestjs/serve-static": "^5.0.4",
     "@openmfp/portal-server-lib": "0.163.3",
     "axios": "^1.6.3",
-    "class-validator": "0.14.2",
+    "class-validator": "0.14.3",
     "cookie-parser": "1.4.7",
     "dotenv": "17.2.3",
     "reflect-metadata": "0.2.2",
