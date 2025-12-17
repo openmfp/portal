@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   PortalComponent,
@@ -8,5 +9,5 @@ import {
 const portalOptions: PortalOptions = {};
 
 bootstrapApplication(PortalComponent, {
-  providers: [providePortal(portalOptions)],
+  providers: [providePortal(portalOptions), provideZonelessChangeDetection()],
 }).catch((err) => console.error(err));

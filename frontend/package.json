@@ -35,17 +35,13 @@
     "@luigi-project/client": "2.25.1",
     "@luigi-project/core": "2.25.1",
     "@luigi-project/plugin-auth-oauth2": "2.25.1",
-    "@openmfp/portal-ui-lib": "0.183.1",
-    "@ui5/webcomponents-ngx": "0.5.6",
-    "@ui5/webcomponents-base": "2.14.0",
-    "@ui5/webcomponents-fiori": "2.14.0",
-    "@ui5/webcomponents-icons": "2.14.0",
+    "@openmfp/portal-ui-lib": "0.184.22",
+    "@ui5/webcomponents-ngx": "0.5.9",
     "jmespath": "0.16.0",
     "jwt-decode": "4.0.0",
     "lodash": "4.17.21",
     "rxjs": "7.8.2",
-    "tslib": "2.8.1",
-    "zone.js": "0.15.1"
+    "tslib": "2.8.1"
   },
   "devDependencies": {
     "@angular/build": "^20.0.0",

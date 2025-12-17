@@ -1,9 +1,15 @@
 import { Module } from '@nestjs/common';
-import { PortalModule, PortalModuleOptions } from '@openmfp/portal-server-lib';
+import {
+  PortalModule,
+  PortalModuleOptions,
+} from '@openmfp/portal-server-lib';
 import { config } from 'dotenv';
 import * as path from 'node:path';
 
-const __filename = new URL(import.meta.url).pathname;
+let __filename = new URL(import.meta.url).pathname;
+if (process.platform === 'win32' && __filename.startsWith('/')) {
+  __filename = __filename.slice(1);
+}
 const __dirname = path.dirname(__filename);
 
 config({ path: './.env' });
