@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "25.2.1",
+    "node": "25.3.0",
     "npm": "11.7.0"
   },
   "author": "",
