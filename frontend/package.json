@@ -32,7 +32,7 @@
     "@luigi-project/client": "^2.25.1",
     "@luigi-project/core": "^2.25.1",
     "@luigi-project/plugin-auth-oauth2": "^2.25.1",
-    "@openmfp/portal-ui-lib": "^0.186.14",
+    "@openmfp/portal-ui-lib": "^0.186.15",
     "@ui5/webcomponents-ngx": "^0.5.10",
     "jmespath": "^0.16.0",
     "jwt-decode": "^4.0.0",
