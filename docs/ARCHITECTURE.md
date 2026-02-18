@@ -1,544 +1,513 @@
 # Architecture
 
-## Overview
+This document provides the architectural overview of the OpenMFP Portal, following the Architecture and Code Documentation (ACD) standard. For detailed implementation information, see [ACD.md](./ACD.md).
 
-The OpenMFP Portal is a web-based management interface for the OpenMFP platform. It provides a unified interface for accessing and managing various OpenMFP resources, services, and integrations through a micro-frontend architecture powered by Luigi Framework.
+## Table of Contents
 
-### Purpose
+1. [Requirements](#requirements)
+2. [Product-Specific Qualities](#product-specific-qualities)
+3. [Architectural Design Decisions](#architectural-design-decisions)
+   - [Technology Decisions](#technology-decisions)
+   - [Architecture Decisions](#architecture-decisions)
+   - [Usage of Services](#usage-of-services)
+   - [Offered APIs](#offered-apis)
+   - [APIs Used](#apis-used)
+   - [Deployment Process](#deployment-process)
+   - [Operations Concept](#operations-concept)
 
-The portal serves as the central entry point for users to:
-- Access and manage OpenMFP resources
-- Navigate between different micro-frontends and services
-- Interact with Kubernetes custom resources through a user-friendly interface
-- Integrate with external services like Gardener Dashboard
+---
 
-### Technology Stack
+## Requirements
 
-**Frontend:**
-- Angular 18 with standalone components
-- Luigi Framework for micro-frontend orchestration
-- @openmfp/portal-ui-lib for UI components
-- TypeScript 5.5
+### Functional Requirements
 
-**Backend:**
-- NestJS 10 framework
-- @openmfp/portal-server-lib for portal services
-- Kubernetes client-node for CRD interaction
-- Node.js 22+
+**Portal Management Interface**
+The portal provides a unified web-based interface for accessing and managing OpenMFP platform resources, services, and integrations.
 
-## High-Level Architecture
+**Micro-Frontend Orchestration**
+The portal dynamically loads and orchestrates multiple micro-frontend applications, allowing modular and independent deployment of features.
 
-```mermaid
-graph TB
-    subgraph "Client Browser"
-        UI[Angular Frontend<br/>Luigi Shell]
-    end
+**Dynamic Content Configuration**
+The portal configuration is driven by Kubernetes Custom Resources (ContentConfiguration CRDs), enabling runtime changes without redeployment.
 
-    subgraph "Portal Backend"
-        API[NestJS API Server<br/>Port 3000]
-        SPService[Service Provider Service]
-        EntityContext[Entity Context Provider]
-        PortalContext[Portal Context Provider]
-    end
+**Entity-Based Navigation**
+The portal supports entity-scoped navigation (accounts, projects, etc.) with context-aware content and permissions.
 
-    subgraph "Kubernetes Cluster"
-        CRD[ContentConfiguration CRDs<br/>openmfp-system namespace]
-        K8sAPI[Kubernetes API]
-    end
+**External Service Integration**
+The portal integrates external services like Gardener Dashboard through iframe embedding and virtual tree navigation.
 
-    subgraph "External Services"
-        Gardener[Gardener Dashboard]
-        MicroFE[Micro-frontends]
-    end
+### Non-Functional Requirements
 
-    UI -->|HTTP Requests /rest/**| API
-    API --> SPService
-    API --> EntityContext
-    API --> PortalContext
-    SPService -->|List ContentConfigurations| K8sAPI
-    K8sAPI --> CRD
-    UI -->|Embed iframes| MicroFE
-    UI -->|Embed virtualTree| Gardener
+**Scalability**
+The portal must support multiple concurrent users and dynamically scale based on load.
 
-    style UI fill:#e1f5ff
-    style API fill:#fff4e1
-    style CRD fill:#e8f5e9
-    style Gardener fill:#f3e5f5
-```
+**Performance**
+The portal should provide fast initial load times and lazy-load micro-frontends on demand.
 
-## Component Architecture
+**Security**
+The portal must implement OAuth2 authentication, token-based API access, and role-based authorization.
 
-### Frontend Architecture
+**Extensibility**
+The portal architecture must support adding new micro-frontends, entity types, and service providers without core changes.
 
-```mermaid
-graph LR
-    subgraph "Frontend Application"
-        Main[main.ts<br/>Bootstrap]
-        Portal[PortalComponent<br/>from portal-ui-lib]
-        Luigi[Luigi Framework<br/>Micro-frontend Shell]
-        Config[Portal Configuration]
-    end
+---
 
-    subgraph "External Libraries"
-        PUIL[@openmfp/portal-ui-lib]
-        LuigiCore[@luigi-project/core]
-        OAuth[@luigi-project/plugin-auth-oauth2]
-    end
+## Product-Specific Qualities
 
-    Main -->|bootstrapApplication| Portal
-    Main -->|providePortal| Config
-    Portal --> Luigi
-    Portal --> PUIL
-    Luigi --> LuigiCore
-    Luigi --> OAuth
+### Modularity Through Micro-Frontends
 
-    style Main fill:#e3f2fd
-    style Portal fill:#f3e5f5
-    style Luigi fill:#fff3e0
-```
+The portal uses the Luigi Framework to compose independent micro-frontend applications. Each micro-frontend can be:
+- Developed independently
+- Deployed separately
+- Owned by different teams
+- Written in different frontend frameworks
 
-The frontend is minimal by design, delegating most functionality to the `@openmfp/portal-ui-lib` library. This library provides:
-- The main `PortalComponent` that serves as the Luigi shell
-- Navigation configuration
-- Micro-frontend integration
-- Authentication handling
+**Critical for success**: This modularity enables parallel development and prevents monolithic frontend architecture.
 
-### Backend Architecture
+### Configuration-as-Code via Kubernetes CRDs
 
-```mermaid
-graph TB
-    subgraph "NestJS Application"
-        Main[main.ts<br/>Bootstrap]
-        AppModule[AppModule]
-        PortalModule[PortalModule<br/>from portal-server-lib]
+The portal's navigation, content, and micro-frontend configurations are stored as Kubernetes Custom Resources (ContentConfiguration CRDs). This enables:
+- Version-controlled configuration
+- GitOps-based deployments
+- Runtime configuration changes
+- Consistent multi-cluster deployments
 
-        subgraph "Custom Providers"
-            SPService[KubernetesServiceProvidersService]
-            EntityProvider[AccountEntityContextProvider]
-            ContextProvider[OpenmfpPortalProvider]
-        end
-    end
+**Critical for success**: Kubernetes-native configuration aligns with cloud-native operations and enables automated configuration management.
 
-    subgraph "Kubernetes Integration"
-        K8sClient[Kubernetes Client<br/>@kubernetes/client-node]
-        CustomAPI[CustomObjectsApi]
-    end
+### Stateless Backend Architecture
 
-    subgraph "Portal Server Library"
-        PSL[@openmfp/portal-server-lib]
-        Interfaces[ServiceProviderService<br/>EntityContextProvider<br/>PortalContextProvider]
-    end
+The backend is stateless and fetches fresh configuration from Kubernetes on each request. This ensures:
+- Horizontal scalability
+- No session management complexity
+- Immediate configuration updates
+- Simplified operations
 
-    Main --> AppModule
-    AppModule -->|imports| PortalModule
-    AppModule -->|configures| SPService
-    AppModule -->|configures| EntityProvider
-    AppModule -->|configures| ContextProvider
+**Critical for success**: Stateless design enables cloud-native deployment patterns and auto-scaling.
 
-    SPService -->|implements| Interfaces
-    EntityProvider -->|implements| Interfaces
-    ContextProvider -->|implements| Interfaces
+---
 
-    SPService --> K8sClient
-    K8sClient --> CustomAPI
+## Architectural Design Decisions
 
-    PortalModule --> PSL
+### Technology Decisions
 
-    style Main fill:#e8f5e9
-    style AppModule fill:#fff3e0
-    style SPService fill:#e1f5ff
-    style K8sClient fill:#f3e5f5
-```
+#### Frontend Stack
 
-## Key Workflows
+**Angular 18 with Standalone Components**
+- **Rationale**: Modern Angular architecture reduces boilerplate and improves performance
+- **Trade-offs**: Requires Angular-specific knowledge; standalone components break from older Angular patterns
+- **Status**: Active
 
-### Service Provider Discovery Flow
+**Luigi Framework for Micro-Frontend Orchestration**
+- **Rationale**: Framework-agnostic micro-frontend solution; supports iframe-based isolation
+- **Trade-offs**: Adds iframe overhead; cross-origin communication complexity
+- **Alternatives Considered**: Single-SPA (more invasive), Module Federation (requires Webpack)
+- **Status**: Active
 
-```mermaid
-sequenceDiagram
-    participant Client as Browser
-    participant Backend as NestJS API
-    participant K8s as Kubernetes API
-    participant CRD as ContentConfiguration CRDs
+**TypeScript 5.5**
+- **Rationale**: Type safety, better developer experience, modern language features
+- **Trade-offs**: Build complexity, requires compilation
+- **Status**: Active
 
-    Client->>Backend: GET /rest/service-providers
-    Backend->>K8s: listNamespacedCustomObject()
-    Note over K8s: API Group: core.openmfp.io<br/>Version: v1alpha1<br/>Namespace: openmfp-system<br/>Resource: contentconfigurations
-    K8s->>CRD: Query CRDs
-    CRD-->>K8s: Return items[]
-    K8s-->>Backend: Response with items
-    Backend->>Backend: Filter items with status.configurationResult
-    Backend->>Backend: Parse JSON configurations
-    Backend-->>Client: Return serviceProviders array
-    Client->>Client: Render navigation and micro-frontends
-```
+**RxJS for Reactive Programming**
+- **Rationale**: Native Angular integration, powerful async handling
+- **Trade-offs**: Steep learning curve, easy to misuse
+- **Status**: Active
 
-### Entity Context Resolution Flow
+#### Backend Stack
 
-```mermaid
-sequenceDiagram
-    participant Client as Browser
-    participant Backend as NestJS API
-    participant EntityProvider as AccountEntityContextProvider
+**NestJS 10 Framework**
+- **Rationale**: Structured Node.js framework with TypeScript, dependency injection, and module system
+- **Trade-offs**: Framework overhead for simple applications
+- **Alternatives Considered**: Express (too minimal), Fastify (less ecosystem)
+- **Status**: Active
 
-    Client->>Backend: GET /rest/entity-context?entity=account
-    Backend->>EntityProvider: getContextValues(token, context)
-    EntityProvider->>EntityProvider: Extract account from context
-    EntityProvider->>EntityProvider: Define policies array
-    Note over EntityProvider: Policies: create, delete, get,<br/>list, update, watch,<br/>gardener_project_create, etc.
-    EntityProvider-->>Backend: Return context values
-    Backend-->>Client: Return { id, policies }
-    Client->>Client: Apply policies to UI elements
-```
+**Node.js 22+**
+- **Rationale**: LTS version with modern features, good performance
+- **Trade-offs**: Single-threaded execution model
+- **Status**: Active
 
-### Content Configuration Loading
+**Kubernetes Client for Node.js**
+- **Rationale**: Official Kubernetes client library, well-maintained
+- **Trade-offs**: Verbose API, requires deep Kubernetes knowledge
+- **Status**: Active
 
-```mermaid
-sequenceDiagram
-    participant Portal as Luigi Portal Shell
-    participant Backend as Backend API
-    participant K8s as Kubernetes
+#### External Libraries
 
-    Portal->>Backend: Initialize - Request service providers
-    Backend->>K8s: Fetch ContentConfiguration CRDs
-    K8s-->>Backend: Return CRD items
-    Backend->>Backend: Extract luigiConfigFragment from each CRD
-    Note over Backend: Each CRD contains:<br/>- name<br/>- creationTimestamp<br/>- luigiConfigFragment.data.nodes[]
-    Backend-->>Portal: Return content configurations
-    Portal->>Portal: Merge Luigi config fragments
-    Portal->>Portal: Build navigation tree
-    Portal->>Portal: Register micro-frontend nodes
-    Note over Portal: Nodes include:<br/>- pathSegment<br/>- label<br/>- icon<br/>- viewUrl or url<br/>- entityType<br/>- context
-```
+**@openmfp/portal-ui-lib**
+- **Purpose**: Core portal UI components, Luigi shell configuration, navigation management
+- **Ownership**: OpenMFP organization
+- **Status**: Active dependency
 
-## Dependencies and Integrations
+**@openmfp/portal-server-lib**
+- **Purpose**: Backend portal services, REST API implementation, provider interfaces
+- **Ownership**: OpenMFP organization
+- **Status**: Active dependency
 
-### Frontend Dependencies
+**@luigi-project/plugin-auth-oauth2**
+- **Purpose**: OAuth2 authentication integration for Luigi Framework
+- **Ownership**: SAP Luigi Project
+- **Status**: Active dependency
 
-**Core Framework:**
-- **@angular/core (^18.0.0)**: Primary application framework
-- **@angular/router (^18.0.0)**: Routing capabilities
-- **rxjs (~7.8.0)**: Reactive programming library
+### Architecture Decisions
 
-**Portal Libraries:**
-- **@openmfp/portal-ui-lib (^0.82.0)**: OpenMFP portal UI components and Luigi shell
-- **@luigi-project/core (^2.18.1)**: Micro-frontend framework for navigation and composition
-- **@luigi-project/plugin-auth-oauth2 (^2.18.1)**: OAuth2 authentication plugin
+#### Minimal Shell Architecture
 
-**Utilities:**
-- **jwt-decode (^4.0.0)**: JWT token parsing
-- **jmespath (0.16.0)**: JSON query language
-- **lodash (4.17.21)**: JavaScript utility library
+**Decision**: The portal itself contains minimal application code. Most functionality is delegated to `@openmfp/portal-ui-lib` (frontend) and `@openmfp/portal-server-lib` (backend).
 
-### Backend Dependencies
+**Rationale**:
+- Reduces duplication across OpenMFP portal instances
+- Centralizes common functionality in shared libraries
+- Simplifies portal customization and updates
+- Enables consistent behavior across deployments
 
-**Core Framework:**
-- **@nestjs/core (^10.4.6)**: NestJS application framework
-- **@nestjs/common (^10.4.6)**: Common NestJS utilities
-- **@nestjs/platform-express (^10.4.6)**: Express platform adapter
+**Consequences**:
+- Strong coupling to OpenMFP portal libraries
+- Portal cannot function without these dependencies
+- Debugging requires understanding library internals
 
-**Portal Libraries:**
-- **@openmfp/portal-server-lib (^0.93.0)**: OpenMFP portal server components and services
+#### Dynamic Configuration Through CRDs
 
-**Kubernetes Integration:**
-- **@kubernetes/client-node (^0.22.0)**: Official Kubernetes client for Node.js
-  - Used to interact with Kubernetes API
-  - Reads ContentConfiguration custom resources
-  - Loads kubeconfig from default locations
+**Decision**: Portal navigation and content configuration is stored in Kubernetes ContentConfiguration CRDs rather than static files.
 
-**HTTP and Utilities:**
-- **@nestjs/axios (^3.0.1)**: HTTP client module
-- **axios (^1.6.3)**: Promise-based HTTP client
-- **cookie-parser (1.4.7)**: Cookie parsing middleware
-- **dotenv (^16.4.5)**: Environment variable management
+**Rationale**:
+- Kubernetes-native configuration management
+- Runtime configuration updates without redeployment
+- Version control through Kubernetes GitOps
+- Consistent with OpenMFP's Kubernetes-first approach
 
-### External Service Integrations
+**Consequences**:
+- Portal requires connection to Kubernetes cluster
+- Configuration changes require CRD updates
+- Debugging requires Kubernetes access
 
-**Gardener Dashboard:**
-- Integrated as a virtual tree node in Luigi navigation
-- Accessed via iframe embedding
-- URL configured in ContentConfiguration CRDs
-- Example: `https://d.ing.gardener-op.mfp-dev.shoot.canary.k8s-hana.ondemand.com`
+#### Stateless Backend with No Caching
 
-**Luigi Fiddle Examples:**
-- Demo micro-frontends for testing
-- Hosted at `https://fiddle.luigi-project.io`
-- Include table, tree, and empty page examples
+**Decision**: The backend does not cache ContentConfiguration data and fetches from Kubernetes on every request.
 
-### Kubernetes Custom Resources
+**Rationale**:
+- Simplifies implementation
+- Guarantees fresh configuration data
+- Enables horizontal scaling without cache synchronization
+- Reduces operational complexity
 
-**ContentConfiguration CRD:**
-- **API Group**: `core.openmfp.io`
-- **Version**: `v1alpha1`
-- **Namespace**: `openmfp-system`
-- **Purpose**: Dynamic configuration of portal content and navigation
+**Consequences**:
+- Higher latency for service provider requests
+- Increased load on Kubernetes API
+- Future caching may be needed for production scale
 
-**CRD Structure:**
-```yaml
-apiVersion: core.openmfp.io/v1alpha1
-kind: ContentConfiguration
-metadata:
-  name: example-config
-  namespace: openmfp-system
-spec:
-  # Specification details
-status:
-  configurationResult: |
+**Recommendation**: Consider implementing caching with Kubernetes watch-based invalidation for production deployments.
+
+#### OAuth2 Authentication via Luigi Plugin
+
+**Decision**: Authentication is handled client-side through Luigi's OAuth2 plugin rather than backend session management.
+
+**Rationale**:
+- Keeps backend stateless
+- Leverages Luigi's built-in auth capabilities
+- Supports standard OAuth2 flows
+- Micro-frontends inherit authentication
+
+**Consequences**:
+- Token management happens in browser
+- Backend must validate tokens on every request
+- Refresh token logic handled by Luigi plugin
+
+### Usage of Services
+
+#### Internal Services
+
+**ContentConfiguration CRD Operator** (assumed)
+- **Purpose**: Manages ContentConfiguration custom resources in Kubernetes
+- **Usage**: The portal reads ContentConfiguration CRDs to build navigation
+- **Reference**: Core OpenMFP platform component
+
+**CRD Gateway API** (referenced via `CRD_GATEWAY_API_URL`)
+- **Purpose**: Provides API access to OpenMFP custom resources
+- **Usage**: Portal context provider exposes API URL to micro-frontends
+- **Reference**: Core OpenMFP platform component
+
+#### External Services
+
+**Gardener Dashboard** (optional integration)
+- **Purpose**: Kubernetes cluster management UI
+- **Usage**: Embedded as virtual tree node in portal navigation
+- **Integration Method**: Iframe embedding with Luigi communication
+- **Configuration**: URL specified in ContentConfiguration CRDs
+
+**Luigi Fiddle Examples** (development only)
+- **Purpose**: Demo micro-frontends for testing portal integration
+- **Usage**: Development and testing examples
+- **URL**: https://fiddle.luigi-project.io
+
+### Offered APIs
+
+The portal backend exposes REST APIs through the `@openmfp/portal-server-lib` module.
+
+#### Service Provider API
+
+**Endpoint**: `GET /rest/service-providers`
+
+**Purpose**: Returns dynamic navigation and content configuration from Kubernetes ContentConfiguration CRDs.
+
+**Authentication**: Bearer token (validated by backend)
+
+**Request Parameters**:
+- `entities` (query): List of entity types to filter
+- `context` (query): Additional context parameters
+
+**Response**:
+```json
+{
+  "serviceProviders": [
     {
-      "name": "example",
-      "creationTimestamp": "2022-05-17T11:37:17Z",
-      "luigiConfigFragment": {
-        "data": {
-          "nodes": [...]
-        }
-      }
-    }
-```
-
-### Configuration Flow
-
-```mermaid
-graph LR
-    subgraph "Configuration Sources"
-        ENV[Environment Variables<br/>.env file]
-        K8sCRD[Kubernetes CRDs<br/>ContentConfiguration]
-    end
-
-    subgraph "Backend Configuration"
-        PortalOpts[PortalModuleOptions]
-        ContextProv[OpenmfpPortalProvider]
-    end
-
-    subgraph "Frontend Configuration"
-        PortalFEOpts[PortalOptions]
-        LuigiConfig[Luigi Configuration]
-    end
-
-    ENV -->|CRD_GATEWAY_API_URL| ContextProv
-    ContextProv --> PortalOpts
-    K8sCRD -->|Dynamic content| PortalOpts
-
-    PortalOpts -->|API response| PortalFEOpts
-    PortalFEOpts --> LuigiConfig
-
-    style ENV fill:#fff3e0
-    style K8sCRD fill:#e8f5e9
-    style PortalOpts fill:#e3f2fd
-    style LuigiConfig fill:#f3e5f5
-```
-
-## Deployment Architecture
-
-### Development Environment
-
-```mermaid
-graph TB
-    subgraph "Development Machine"
-        FE[Angular Dev Server<br/>Port 4300]
-        BE[NestJS Dev Server<br/>Port 3000]
-        Proxy[Proxy Config<br/>/rest/** → :3000]
-    end
-
-    subgraph "Kubernetes Cluster"
-        K8s[Kubernetes API<br/>via kubeconfig]
-        NS[openmfp-system namespace]
-    end
-
-    FE -->|Proxied requests| Proxy
-    Proxy --> BE
-    BE --> K8s
-    K8s --> NS
-
-    style FE fill:#e3f2fd
-    style BE fill:#fff3e0
-    style K8s fill:#e8f5e9
-```
-
-**Development Setup:**
-- Frontend runs on port 4300 with hot reload
-- Backend runs on port 3000 with debug mode
-- Proxy configuration forwards `/rest/**` from frontend to backend
-- Backend connects to Kubernetes using default kubeconfig
-
-### Production Deployment
-
-```mermaid
-graph TB
-    subgraph "Docker Container"
-        Node[Node.js Runtime<br/>Port 3000]
-        Static[Serve Static<br/>Frontend Assets]
-        API[NestJS API<br/>Backend Services]
-    end
-
-    subgraph "Kubernetes Cluster"
-        Service[Portal Service]
-        Pod[Portal Pod]
-        CRD[ContentConfiguration CRDs]
-    end
-
-    Client[Client Browser] -->|HTTP| Service
-    Service --> Pod
-    Pod --> Node
-    Node --> Static
-    Node --> API
-    API --> CRD
-
-    style Client fill:#e1f5ff
-    style Node fill:#fff3e0
-    style Pod fill:#e8f5e9
-```
-
-**Production Deployment:**
-- Multi-stage Docker build
-- Frontend built to static assets in `frontend/dist`
-- Backend built to JavaScript in `backend/dist`
-- Single Node.js process serves both static frontend and API
-- Alpine-based runtime image for minimal size
-- Exposed on port 3000
-
-### Docker Build Process
-
-```mermaid
-graph LR
-    subgraph "Build Stage"
-        Source[Source Code]
-        NPM[npm install]
-        Build[npm run build]
-    end
-
-    subgraph "Runtime Stage"
-        Alpine[node:22.12-alpine]
-        BackendDist[backend/dist]
-        FrontendDist[frontend/dist]
-    end
-
-    Source --> NPM
-    NPM --> Build
-    Build --> BackendDist
-    Build --> FrontendDist
-
-    BackendDist --> Alpine
-    FrontendDist --> Alpine
-
-    style Build fill:#fff3e0
-    style Alpine fill:#e8f5e9
-```
-
-## Security Considerations
-
-### Authentication
-
-- OAuth2 authentication via Luigi plugin (`@luigi-project/plugin-auth-oauth2`)
-- JWT token handling via `jwt-decode`
-- Tokens passed to backend for service provider requests
-- Entity context resolution based on authenticated user
-
-### Authorization
-
-The `AccountEntityContextProvider` defines policies for authenticated users:
-- **Resource operations**: create, delete, get, list, update, watch
-- **Gardener operations**: gardener_project_create, gardener_project_list, gardener_shoot_create, gardener_shoot_list
-
-### Kubernetes Access
-
-- Backend uses Kubernetes client with kubeconfig authentication
-- Reads ContentConfiguration CRDs from `openmfp-system` namespace
-- Service account or user credentials loaded from default kubeconfig location
-- No direct client-to-Kubernetes communication (all proxied through backend)
-
-## Extensibility
-
-### Adding New Content
-
-New portal content can be added dynamically by creating ContentConfiguration CRDs in Kubernetes:
-
-```yaml
-apiVersion: core.openmfp.io/v1alpha1
-kind: ContentConfiguration
-metadata:
-  name: my-new-content
-  namespace: openmfp-system
-status:
-  configurationResult: |
-    {
-      "name": "my-new-content",
-      "luigiConfigFragment": {
-        "data": {
-          "nodes": [
-            {
-              "pathSegment": "my-feature",
-              "label": "My Feature",
-              "icon": "add",
-              "url": "https://my-micro-frontend.example.com",
-              "entityType": "account"
+      "contentConfiguration": [
+        {
+          "name": "example-config",
+          "creationTimestamp": "2022-05-17T11:37:17Z",
+          "luigiConfigFragment": {
+            "data": {
+              "nodes": [...]
             }
-          ]
+          }
         }
-      }
+      ]
     }
-```
-
-### Custom Entity Context Providers
-
-Additional entity types can be supported by implementing the `EntityContextProvider` interface and registering in `AppModule`:
-
-```typescript
-export class CustomEntityContextProvider implements EntityContextProvider {
-  async getContextValues(
-    token: string,
-    context?: Record<string, any>
-  ): Promise<Record<string, any>> {
-    // Custom logic
-    return {
-      id: context.entityId,
-      customData: {}
-    };
-  }
+  ]
 }
 ```
 
-### Service Provider Customization
+#### Entity Context API
 
-The `KubernetesServiceProvidersService` can be replaced or extended to fetch configurations from different sources (databases, external APIs, etc.) by implementing the `ServiceProviderService` interface.
+**Endpoint**: `GET /rest/entity-context?entity=<entityType>`
 
-## Performance Considerations
+**Purpose**: Returns entity-specific context values and policies for the authenticated user.
 
-### Micro-frontend Loading
+**Authentication**: Bearer token (validated by backend)
 
-- Luigi Framework handles lazy loading of micro-frontends
-- Only active routes load their corresponding micro-frontends
-- Virtual trees (like Gardener) load external applications in isolated iframes
+**Request Parameters**:
+- `entity` (query): Entity type (e.g., "account")
+- `context` (query): Additional context parameters
 
-### Backend Caching
+**Response**:
+```json
+{
+  "id": "account-123",
+  "policies": [
+    "create",
+    "delete",
+    "get",
+    "list",
+    "update",
+    "watch",
+    "gardener_project_create",
+    "gardener_project_list",
+    "gardener_shoot_create",
+    "gardener_shoot_list"
+  ]
+}
+```
 
-- ContentConfiguration CRDs are fetched on each request
-- Consider implementing caching for production deployments
-- Watch Kubernetes events for cache invalidation
+#### Portal Context API
 
-### Build Optimization
+**Endpoint**: `GET /rest/portal-context`
 
-- Production builds use Angular's optimization
-- Tree-shaking removes unused code
-- Multi-stage Docker build separates build and runtime dependencies
-- Alpine Linux runtime image minimizes container size
+**Purpose**: Returns global portal configuration values.
 
-## Monitoring and Observability
+**Authentication**: Bearer token (validated by backend)
 
-### Logging
+**Response**:
+```json
+{
+  "crdGatewayApiUrl": "https://crd-gateway.example.com"
+}
+```
 
-- Backend uses NestJS built-in logging
-- Errors logged to console with stack traces
-- Frontend errors logged to browser console
+### APIs Used
 
-### Health Checks
+#### Kubernetes API
 
-- Backend exposes health endpoints via NestJS
-- Kubernetes readiness/liveness probes can be configured
-- Frontend availability depends on backend serving static assets
+**Service**: Kubernetes API Server
 
-## Related Repositories
+**Purpose**: Read ContentConfiguration CRDs to build portal navigation
 
-- **@openmfp/portal-ui-lib**: Core portal UI components and Luigi configuration
-- **@openmfp/portal-server-lib**: Backend portal services and interfaces
-- **luigi-project/luigi**: Micro-frontend framework
-- **kubernetes/client-node**: Official Kubernetes client for Node.js
+**Authentication**: Kubeconfig-based authentication (service account or user credentials)
+
+**API Calls**:
+- `GET /apis/core.openmfp.io/v1alpha1/namespaces/openmfp-system/contentconfigurations` - List ContentConfiguration CRDs
+
+**Client Library**: `@kubernetes/client-node`
+
+**Error Handling**: Logs errors to console; returns empty service providers on failure
+
+#### CRD Gateway API
+
+**Service**: CRD Gateway (referenced via environment variable)
+
+**Purpose**: Provide micro-frontends access to OpenMFP custom resources
+
+**Authentication**: Token passed from client
+
+**Usage**: Portal exposes API URL via Portal Context API; micro-frontends make direct API calls
+
+### Deployment Process
+
+#### Development Deployment
+
+**Prerequisites**:
+- Node.js 22+
+- npm 9+
+- Access to Kubernetes cluster with ContentConfiguration CRDs
+- Valid kubeconfig
+
+**Steps**:
+```bash
+# Install dependencies
+npm run prepare
+
+# Start development servers
+npm start
+```
+
+**Architecture**:
+- Frontend: Angular CLI dev server on port 4300
+- Backend: NestJS debug mode on port 3000
+- Proxy: `/rest/**` requests forwarded from frontend to backend
+- Hot reload enabled for both frontend and backend
+
+#### Production Deployment
+
+**Container Build**:
+
+Multi-stage Docker build:
+1. **Build Stage** (node:22.12):
+   - Install dependencies with npm ci
+   - Build frontend (Angular production build)
+   - Build backend (NestJS compilation)
+
+2. **Runtime Stage** (node:22.12-alpine):
+   - Copy built artifacts
+   - Expose port 3000
+   - Single Node.js process serves both static frontend and API
+
+**Secrets Management**:
+- GitHub token required for npm package access (passed as Docker secret)
+- Kubeconfig for Kubernetes access (mounted as volume or service account)
+
+**Deployment Target**: Kubernetes cluster
+
+**Configuration**:
+- Environment variables via ConfigMap/Secret
+- Kubeconfig via mounted service account or Secret
+- Port 3000 exposed via Service
+
+**Scaling**: Horizontal scaling supported (stateless architecture)
+
+### Operations Concept
+
+#### Key Performance Indicators (KPIs)
+
+**Availability**:
+- Target: 99.9% uptime
+- Measurement: HTTP health check endpoint
+
+**Response Time**:
+- Target: < 500ms for API requests
+- Measurement: Request latency metrics
+
+**Error Rate**:
+- Target: < 1% of requests
+- Measurement: HTTP error status codes
+
+#### Monitoring
+
+**Logging**:
+- Backend: NestJS structured logging to stdout
+- Frontend: Browser console logging (errors only in production)
+- Log aggregation: Application logs collected by Kubernetes log aggregator
+
+**Health Checks**:
+- Kubernetes readiness probe: HTTP GET on health endpoint
+- Kubernetes liveness probe: HTTP GET on health endpoint
+
+**Metrics** (future):
+- Request count and latency per endpoint
+- Kubernetes API call latency
+- ContentConfiguration CRD count and size
+
+#### Support and Responsibilities
+
+**Operations Team Responsibilities**:
+- Monitor portal health and availability
+- Manage Kubernetes cluster access and RBAC
+- Rotate service account credentials
+- Handle infrastructure issues
+
+**Development Team Responsibilities**:
+- Fix application bugs
+- Add new features and micro-frontend integrations
+- Update dependencies
+- Maintain ContentConfiguration CRD schemas
+
+**End User Responsibilities**:
+- Report UI issues and bugs
+- Provide feedback on usability
+
+#### Troubleshooting
+
+**Frontend Not Loading**:
+1. Check backend is running and accessible
+2. Verify proxy configuration in development
+3. Check browser console for CORS errors
+
+**Backend Cannot Connect to Kubernetes**:
+1. Verify kubeconfig is valid and accessible
+2. Check service account has correct RBAC permissions
+3. Confirm `openmfp-system` namespace exists
+4. Test Kubernetes connectivity: `kubectl get contentconfigurations -n openmfp-system`
+
+**No Navigation Items Appearing**:
+1. Check ContentConfiguration CRDs exist: `kubectl get contentconfigurations -n openmfp-system`
+2. Verify CRDs have `status.configurationResult` populated
+3. Validate JSON format in `configurationResult`
+4. Check backend logs for CRD fetch errors
+
+**Micro-Frontend Not Loading**:
+1. Verify external URL is accessible
+2. Check for CORS issues (browser console)
+3. Confirm iframe embedding is allowed (X-Frame-Options header)
+4. Validate Luigi node configuration in ContentConfiguration CRD
+
+#### Security Considerations
+
+**Authentication**:
+- OAuth2 via Luigi plugin
+- JWT token validation on backend
+- No session storage
+
+**Authorization**:
+- Entity context providers define policies
+- Policies control UI element visibility
+- Backend validates tokens but does not enforce authorization (micro-frontends handle their own authorization)
+
+**Kubernetes Access**:
+- Backend uses service account with minimal RBAC permissions
+- No direct client-to-Kubernetes communication
+- All Kubernetes access proxied through backend
+
+**Best Practices**:
+- Never commit `.env` files with secrets
+- Use Kubernetes Secrets for production credentials
+- Rotate service account tokens regularly
+- Implement rate limiting for production APIs
+- Use HTTPS in production deployments
+
+---
+
+## Related Documentation
+
+- [ACD.md](./ACD.md) - Detailed Architecture and Code Documentation
+- [README.md](../README.md) - Repository overview and getting started guide
+- [CONTRIBUTING.md](../CONTRIBUTING.md) - Contribution guidelines
+- [Luigi Framework Documentation](https://docs.luigi-project.io)
+- [NestJS Documentation](https://docs.nestjs.com)
+- [Angular Documentation](https://angular.io/docs)
