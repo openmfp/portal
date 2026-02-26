@@ -44,7 +44,7 @@
     "@openmfp/eslint-config-typescript": "0.7.7",
     "@types/express": "5.0.6",
     "@types/jest": "^29.5.2",
-    "@types/node": "24.10.1",
+    "@types/node": "24.10.14",
     "@types/supertest": "6.0.3",
     "@typescript-eslint/eslint-plugin": "8.46.2",
     "@typescript-eslint/parser": "8.46.2",
