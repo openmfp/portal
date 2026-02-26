@@ -1,4 +1,4 @@
-FROM node:24.11 AS build
+FROM node:24.14 AS build
 
 COPY frontend/package.json frontend/build-scripts/extract-versions.js frontend/package-lock.json /app/frontend/
 COPY backend/package.json backend/package-lock.json /app/backend/
@@ -11,7 +11,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM node:24.11.0-alpine
+FROM node:24.14.0-alpine
 
 ENV USER_UID=1001
 ENV GROUP_UID=1001
