@@ -24,9 +24,9 @@
   "dependencies": {
     "@kubernetes/client-node": "^1.4.0",
     "@nestjs/axios": "^4.0.1",
-    "@nestjs/common": "^11.1.8",
-    "@nestjs/core": "^11.1.8",
-    "@nestjs/platform-express": "^11.1.8",
+    "@nestjs/common": "^11.1.14",
+    "@nestjs/core": "^11.1.14",
+    "@nestjs/platform-express": "^11.1.14",
     "@nestjs/serve-static": "^5.0.4",
     "@openmfp/portal-server-lib": "0.163.23",
     "axios": "^1.6.3",
@@ -37,9 +37,9 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.10",
-    "@nestjs/schematics": "^11.0.9",
-    "@nestjs/testing": "^11.1.8",
+    "@nestjs/cli": "11.0.10",
+    "@nestjs/schematics": "11.0.9",
+    "@nestjs/testing": "11.1.8",
     "@openmfp/config-prettier": "0.9.2",
     "@openmfp/eslint-config-typescript": "0.7.7",
     "@types/express": "5.0.6",
