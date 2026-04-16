@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   pipe:
-    uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@4f9c01c57766d5b99bd97d07e55c7c6526dc6bb3 # main
+    uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@a9a7b416b413397069ca863ec2d925d37c3536b8 # main
     secrets: inherit
     with:
       imageTagName: ghcr.io/openmfp/portal
