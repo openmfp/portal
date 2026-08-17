@@ -17,6 +17,7 @@ jobs:
     uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@4f9c01c57766d5b99bd97d07e55c7c6526dc6bb3 # main
     secrets: inherit
     with:
+      node_version: '24'
       imageTagName: ghcr.io/openmfp/portal
       componentVersionKey: portal
       repoVersionUpdate: openmfp/helm-charts
