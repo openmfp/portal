@@ -49,5 +49,8 @@
   "lint-staged": {
     "frontend/**/*.ts": "npm run lint:ui",
     "backend/**/*.ts": "npm run lint:server"
+  },
+  "overrides": {
+    "shell-quote": "^1.11.0"
   }
 }
