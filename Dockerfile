@@ -1,4 +1,4 @@
-FROM node:24.22 AS build
+FROM node:24.22@sha256:9d266751ca3d7fdbe651c878ffd5ad0a42fed49a18c283509267c97f025b7496 AS build
 
 COPY frontend/package.json frontend/build-scripts/extract-versions.js frontend/package-lock.json /app/frontend/
 COPY backend/package.json backend/package-lock.json /app/backend/
@@ -11,7 +11,7 @@ COPY . ./
 
 RUN npm run build
 
-FROM node:24.22.1-alpine
+FROM node:24.22.1-alpine@sha256:06d7adf3e0ef61a13f1d28682726366f97a15aa1888c934d3ecec86c33918b53
 
 ENV USER_UID=1001
 ENV GROUP_UID=1001
