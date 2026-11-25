@@ -12,6 +12,10 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write # tag creation and version commits
+  pull-requests: write # auto-labeler applies labels
+
 jobs:
   pipe:
     uses: openmfp/gha/.github/workflows/pipeline-node-app.yml@4f9c01c57766d5b99bd97d07e55c7c6526dc6bb3 # main
