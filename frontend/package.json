@@ -42,7 +42,7 @@
     "@openmfp/config-prettier": "0.9.3",
     "nodemon": "3.1.14",
     "rimraf": "6.1.4",
-    "typescript": "~6.0.0"
+    "typescript": "~7.0.0"
   },
   "overrides": {
     "vite": "^8.3.3"
