@@ -2,6 +2,3 @@
 * @openmfp/frame @openmfp/ui-approvers
 package.json
 package-lock.json
-
-# CI and workflow files require CI maintainer review
-/.github/ @openmfp/ci-maintainers
